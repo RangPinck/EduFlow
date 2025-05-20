@@ -3,7 +3,6 @@ using EduFlow.ViewModels;
 using EduFlowApi.DTOs.AuthDTO;
 using EduFlowApi.DTOs.CourseDTOs;
 using Newtonsoft.Json;
-using System;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -82,7 +81,8 @@ namespace EduFlow.ApiConnect
 
             if (!response.IsSuccessStatusCode)
             {
-                await MainWindowViewModel.ErrorMessage("Не удалось получить пользователей!", response.Content.ToString());
+                //await MainWindowViewModel.ErrorMessage("Не удалось получить пользователей!", response.Content.ToString());
+                return string.Empty;
             }
 
             return responseBody;

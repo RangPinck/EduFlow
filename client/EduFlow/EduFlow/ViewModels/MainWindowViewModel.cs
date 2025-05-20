@@ -1,8 +1,6 @@
 ﻿using Avalonia.Controls;
-using Avalonia.Controls.Documents;
 using CommunityToolkit.Mvvm.ComponentModel;
 using EduFlow.ApiConnect;
-using EduFlow.Views;
 using EduFlowApi.DTOs.AuthDTO;
 using MsBox.Avalonia;
 using System.Net;
@@ -17,6 +15,9 @@ namespace EduFlow.ViewModels
 
         [ObservableProperty]
         private UserControl _pageContent = new Login();
+
+        [ObservableProperty]
+        private UserControl _loginPage = new Login();
 
         [ObservableProperty]
         private bool _isAutorize = false;
@@ -62,6 +63,21 @@ namespace EduFlow.ViewModels
         public void ChengeMenuState()
         {
             IsOpenMenu = !IsOpenMenu;
+        }
+
+        public void GoToUserPage()
+        {
+            PageContent = new UserPage();
+        }
+
+        public void GoToProfile()
+        {
+            PageContent = new Profile();
+        }
+
+        public void GoToCoursesPage()
+        {
+            PageContent = new CoursesPage();
         }
     }
 }

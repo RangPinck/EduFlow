@@ -1,0 +1,42 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="EduFlow.Profile"
+			 xmlns:vm="using:EduFlow.ViewModels"
+			 x:DataType="vm:ProfileVM"
+			 >
+	<Grid RowDefinitions="80, *, 80">
+		<TextBlock Classes="Header">Профиль</TextBlock>
+		<Grid Grid.Row="1" ColumnDefinitions="*,*">
+			<Image Source="/Assets/Test Account Black.png" Width="150" Height="150" HorizontalAlignment="Center" VerticalAlignment="Top"></Image>
+			<StackPanel Grid.Column="1">
+				<TextBlock>
+					<Run Text="Id:" Classes="Header" FontSize="20"></Run>
+					<Run Text="{Binding Profile.Id}" ></Run>
+				</TextBlock>
+				<TextBlock>
+					<Run Text="Фамилия:" Classes="Header" FontSize="20"></Run>
+					<Run Text="{Binding Profile.UserSurname}" ></Run>
+				</TextBlock>
+				<TextBlock>
+					<Run Text="Имя:" Classes="Header" FontSize="20"></Run>
+					<Run Text="{Binding Profile.UserName}" ></Run>
+				</TextBlock>
+				<TextBlock>
+					<Run Text="Отчество:" Classes="Header" FontSize="20"></Run>
+					<Run Text="{Binding Profile.UserPatronymic}" ></Run>
+				</TextBlock>
+				<TextBlock>
+					<Run Text="Статус:" Classes="Header" FontSize="20"></Run>
+					<Run Text="{Binding Profile.UserRole[0]}"></Run>
+				</TextBlock>
+			</StackPanel>
+		</Grid>
+		<Grid Grid.Row="2" ColumnDefinitions="*,20,*">
+			<Button Grid.Column="0" Command="{Binding EditProfile}">Изменить профиль</Button>
+			<Button Grid.Column="2" Command="{Binding LogOut}" Classes="Cansel">Выход</Button>
+		</Grid>
+	</Grid>
+</UserControl>

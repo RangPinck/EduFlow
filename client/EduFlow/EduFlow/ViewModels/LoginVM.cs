@@ -16,7 +16,7 @@ namespace EduFlow.ViewModels
             LoginData = new LoginDTO()
             {
                 Email = "admin@admin.com",
-                Password = "admin",
+                Password = "admin1cdbapi",
             };
         }
 
@@ -47,7 +47,6 @@ namespace EduFlow.ViewModels
             {
                 await MainWindowViewModel.ErrorMessage("Нет ответа от АПИ!", ex.Message);
             }
-
         }
     }
 }

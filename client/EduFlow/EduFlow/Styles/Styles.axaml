@@ -21,6 +21,8 @@
 
 	<Style Selector="TextBlock">
 		<Setter Property="FontFamily" Value="PT Sans Caption"></Setter>
+		<Setter Property="FontSize" Value="20"></Setter>
+		<Setter Property="VerticalAlignment" Value="Center"></Setter>
 	</Style>
 
 	<Style Selector="TextBlock.Header">
@@ -110,6 +112,21 @@
 		<Setter Property="BorderBrush" Value="White"></Setter>
 		<Setter Property="Background" Value="#19B0FF"></Setter>
 		<Setter Property="Foreground" Value="White"></Setter>
+	</Style>
+
+	<Style Selector="Border.ItemList">
+		<Setter Property="BorderThickness" Value="3"></Setter>
+		<Setter Property="BorderBrush" Value="#19B0FF"></Setter>
+		<Setter Property="CornerRadius" Value="10"></Setter>
+		<Setter Property="Background" Value="White"></Setter>
+		<Setter Property="Padding" Value="3"></Setter>
+	</Style>
+
+	<Style Selector="Button.ListButton:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="BorderThickness" Value="3"></Setter>
+		<Setter Property="BorderBrush" Value="#9EC45F"></Setter>
+		<Setter Property="CornerRadius" Value="10"></Setter>
+		<Setter Property="Background" Value="#9EC45F"></Setter>
 	</Style>
 
 </Styles>

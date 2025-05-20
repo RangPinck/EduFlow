@@ -1,0 +1,58 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="EduFlow.UserPage"
+			 xmlns:vm="using:EduFlow.ViewModels"
+			 x:DataType="vm:UserPageVM"
+			 >
+	<Grid RowDefinitions="80, *, 80">
+		<TextBlock Classes="Header">Пользователи</TextBlock>
+		<TextBlock Grid.Row="1" Classes="Header" HorizontalAlignment="Center" VerticalAlignment="Center" IsVisible="{Binding !VisibleList}">Ничего нет или у вас недостаточно прав.</TextBlock>
+		<Grid Grid.Row="1" IsVisible="{Binding VisibleList}">
+			<ScrollViewer>
+				<ListBox ItemsSource="{Binding Users}" Margin="20,0" CornerRadius="10">
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<Border Margin="2" CornerRadius="10" Classes="ItemList">
+
+								<Grid RowDefinitions="*,*" ColumnDefinitions="*,*">
+									<TextBlock Margin="10,0" Classes="Header" HorizontalAlignment="Left" VerticalAlignment="Center">
+										<TextBlock.Text>
+											<MultiBinding StringFormat="{}{0} {1} {2}">
+												<Binding Path="UserName"></Binding>
+												<Binding Path="UserSurname"></Binding>
+												<Binding Path="UserPatronymic"></Binding>
+											</MultiBinding>
+										</TextBlock.Text>
+									</TextBlock>
+									<StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center">
+										<TextBlock Padding="10,0">
+											<TextBlock.Text>
+												<MultiBinding StringFormat="Роль: {0}">
+													<Binding Path="UserRole[0]"></Binding>
+												</MultiBinding>
+											</TextBlock.Text>
+										</TextBlock>
+										<TextBlock Padding="10,0">
+											<TextBlock.Text>
+												<MultiBinding StringFormat="Дата создания: {0}">
+													<Binding Path="UserDataCreate"></Binding>
+												</MultiBinding>
+											</TextBlock.Text>
+										</TextBlock>
+									</StackPanel>
+									<Button Grid.RowSpan="1" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Command="{Binding $parent[UserControl].((vm:UserPageVM)DataContext).UpdateUser}" CommandParameter="{Binding $parent[ListBox].SelectedItem}" Classes="ListButton">
+										<Image Source="/Assets/Edit.png" Width="30" Height="30"></Image>
+									</Button>
+								</Grid>
+							</Border>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>
+			</ScrollViewer>
+		</Grid>
+		<Button Grid.Row="2" Command="{Binding AddUser}">Добавить пользователя</Button>
+	</Grid>
+</UserControl>
