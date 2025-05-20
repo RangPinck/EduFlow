@@ -29,9 +29,8 @@ public class Program
         {
             swagger.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
             {
-                Title = "Study 1C API",
-                Version = "v1",
-                Description = "API for 1C training applications.",
+                Title = "EduFlow API",
+                Version = "v1"
             });
             swagger.EnableAnnotations();
             swagger.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -150,7 +149,7 @@ public class Program
 
         Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Information()
-            .WriteTo.File($"Logs/Study1CApiLog-.txt", rollingInterval: RollingInterval.Day, shared: true, retainedFileCountLimit: 10)
+            .WriteTo.File($"Logs/EduFlowApiLog-.txt", rollingInterval: RollingInterval.Day, shared: true, retainedFileCountLimit: 10)
             .CreateLogger();
 
         var app = builder.Build();
@@ -188,7 +187,7 @@ public class Program
             app.UseSwagger();
             app.UseSwaggerUI(swagger =>
             {
-                swagger.SwaggerEndpoint("/swagger/v1/swagger.json", "Study 1C API v1");
+                swagger.SwaggerEndpoint("/swagger/v1/swagger.json", "EduFlow API v1");
             });
             app.MapOpenApi();
         }

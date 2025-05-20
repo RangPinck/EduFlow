@@ -1,0 +1,14 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="EduFlow.App"
+             xmlns:local="using:EduFlow"
+             RequestedThemeVariant="Light">
+	<Application.DataTemplates>
+		<local:ViewLocator/>
+	</Application.DataTemplates>
+
+	<Application.Styles>
+		<FluentTheme/>
+		<StyleInclude Source="avares://EduFlow/Styles/Styles.axaml"></StyleInclude>
+	</Application.Styles>
+</Application>

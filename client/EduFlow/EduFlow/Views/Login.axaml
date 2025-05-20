@@ -1,0 +1,24 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="EduFlow.Login"
+			 xmlns:vm="using:EduFlow.ViewModels"
+			 x:DataType="vm:LoginVM"
+			 >
+	<Grid RowDefinitions="*,*,*">
+		<TextBlock Classes="Header">Вход</TextBlock>
+		<Grid Grid.Row="1" RowDefinitions="*,*" MaxWidth="400">
+			<StackPanel Classes="">
+				<TextBlock Classes="InputHeader">Логин:</TextBlock>
+				<TextBox Text="{Binding LoginData.Email}"></TextBox>
+			</StackPanel>
+			<StackPanel Classes="" Grid.Row="1">
+				<TextBlock Classes="InputHeader">Пароль:</TextBlock>
+				<TextBox Text="{Binding LoginData.Password}" PasswordChar="*"></TextBox>
+			</StackPanel>
+		</Grid>
+		<Button Grid.Row="2" Command="{Binding Authorize}">Войти</Button>
+	</Grid>
+</UserControl>

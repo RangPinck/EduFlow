@@ -1,0 +1,115 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<Design.PreviewWith>
+		<Border Padding="20">
+			<StackPanel>
+				<TextBlock Classes="Header">Заголовок</TextBlock>
+				<Panel Height="20"></Panel>
+				<TextBlock Classes="InputHeader">Заголовок</TextBlock>
+				<TextBox Classes="Header"></TextBox>
+				<Panel Height="20"></Panel>
+				<Button>Текст</Button>
+				<Panel Height="20"></Panel>
+				<Button Classes="Done">Текст</Button>
+				<Panel Height="20"></Panel>
+				<Button Classes="Cansel">Текст</Button>
+				<Panel Height="20"></Panel>
+				<Button Classes="Menu">Текст</Button>
+			</StackPanel>
+		</Border>
+	</Design.PreviewWith>
+
+	<Style Selector="TextBlock">
+		<Setter Property="FontFamily" Value="PT Sans Caption"></Setter>
+	</Style>
+
+	<Style Selector="TextBlock.Header">
+		<Setter Property="FontWeight" Value="Bold"></Setter>
+		<Setter Property="FontSize" Value="30"></Setter>
+		<Setter Property="HorizontalAlignment" Value="Center"></Setter>
+		<Setter Property="VerticalAlignment" Value="Center"></Setter>
+	</Style>
+
+	<Style Selector="TextBlock.InputHeader">
+		<Setter Property="FontSize" Value="15"></Setter>
+		<Setter Property="HorizontalAlignment" Value="Left"></Setter>
+		<Setter Property="VerticalAlignment" Value="Center"></Setter>
+		<Setter Property="Margin" Value="10,0,0,3"></Setter>
+	</Style>
+
+	<Style Selector="TextBox">
+		<Setter Property="BorderThickness" Value="3"></Setter>
+		<Setter Property="BorderBrush" Value="#19B0FF"></Setter>
+		<Setter Property="CornerRadius" Value="10"></Setter>
+	</Style>
+
+	<Style Selector="Button">
+		<Setter Property="FontWeight" Value="Bold"></Setter>
+		<Setter Property="FontSize" Value="20"></Setter>
+		<Setter Property="HorizontalAlignment" Value="Center"></Setter>
+		<Setter Property="VerticalAlignment" Value="Center"></Setter>
+		<Setter Property="Foreground" Value="White"></Setter>
+		<Setter Property="BorderThickness" Value="3"></Setter>
+		<Setter Property="BorderBrush" Value="White"></Setter>
+		<Setter Property="CornerRadius" Value="10"></Setter>
+		<Setter Property="Background" Value="#19B0FF"></Setter>
+	</Style>
+
+	<Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Foreground" Value="#19B0FF"></Setter>
+		<Setter Property="BorderThickness" Value="3"></Setter>
+		<Setter Property="BorderBrush" Value="#19B0FF"></Setter>
+		<Setter Property="CornerRadius" Value="10"></Setter>
+		<Setter Property="Background" Value="White"></Setter>
+	</Style>
+
+	<Style Selector="Button.Done">
+		<Setter Property="Foreground" Value="White"></Setter>
+		<Setter Property="BorderThickness" Value="3"></Setter>
+		<Setter Property="BorderBrush" Value="White"></Setter>
+		<Setter Property="CornerRadius" Value="10"></Setter>
+		<Setter Property="Background" Value="#9EC45F"></Setter>
+	</Style>
+
+	<Style Selector="Button.Done:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Foreground" Value="#9EC45F"></Setter>
+		<Setter Property="BorderThickness" Value="3"></Setter>
+		<Setter Property="BorderBrush" Value="#9EC45F"></Setter>
+		<Setter Property="CornerRadius" Value="10"></Setter>
+		<Setter Property="Background" Value="White"></Setter>
+	</Style>
+
+	<Style Selector="Button.Cansel">
+		<Setter Property="Foreground" Value="White"></Setter>
+		<Setter Property="BorderThickness" Value="3"></Setter>
+		<Setter Property="BorderBrush" Value="White"></Setter>
+		<Setter Property="CornerRadius" Value="10"></Setter>
+		<Setter Property="Background" Value="#DD2F2A"></Setter>
+	</Style>
+
+	<Style Selector="Button.Cansel:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Foreground" Value="#DD2F2A"></Setter>
+		<Setter Property="BorderThickness" Value="3"></Setter>
+		<Setter Property="BorderBrush" Value="#DD2F2A"></Setter>
+		<Setter Property="CornerRadius" Value="10"></Setter>
+		<Setter Property="Background" Value="White"></Setter>
+	</Style>
+
+	<Style Selector="Button.Menu">
+		<Setter Property="Foreground" Value="White"></Setter>
+		<Setter Property="BorderThickness" Value="3"></Setter>
+		<Setter Property="BorderBrush" Value="#19B0FF"></Setter>
+		<Setter Property="CornerRadius" Value="10"></Setter>
+		<Setter Property="Background" Value="#19B0FF"></Setter>
+		<Setter Property="HorizontalAlignment" Value="Center"></Setter>
+		<Setter Property="VerticalAlignment" Value="Center"></Setter>
+		<Setter Property="Margin" Value="5, 10,5,0"></Setter>
+	</Style>
+
+	<Style Selector="Button.Menu:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="BorderBrush" Value="White"></Setter>
+		<Setter Property="Background" Value="#19B0FF"></Setter>
+		<Setter Property="Foreground" Value="White"></Setter>
+	</Style>
+
+</Styles>

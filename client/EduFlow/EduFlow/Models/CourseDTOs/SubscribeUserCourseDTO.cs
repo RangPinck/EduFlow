@@ -1,0 +1,20 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+
+namespace EduFlowApi.DTOs.CourseDTOs
+{
+    public class SubscribeUserCourseDTO
+    {
+        [Required(ErrorMessage = "Не указан Id пользователя!")]
+        [Display(Name = "Id пользователя")]
+        [DefaultValue("")]
+        public Guid userId { get; set; }
+
+        [Required(ErrorMessage = "Не указан Id курса!")]
+        [Display(Name = "Id курса")]
+        [DefaultValue("")]
+        public Guid courseId { get; set; }
+    }
+}

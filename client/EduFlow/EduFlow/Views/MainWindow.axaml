@@ -1,0 +1,81 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:EduFlow.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="EduFlow.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/Flow.ico"
+        Title="EduFlow">
+
+	<Design.DataContext>
+		<vm:MainWindowViewModel/>
+	</Design.DataContext>
+
+	<Grid>
+		<ContentControl Content="{Binding PageContent}"></ContentControl>
+
+		<SplitView PanePlacement="Right"
+           DisplayMode="CompactInline"
+           IsPaneOpen="{Binding IsOpenMenu}"
+           CompactPaneLength="70"
+           OpenPaneLength="220"
+		   PaneBackground ="#19B0FF"
+		CornerRadius="10,0,0,10"
+		   IsVisible="{Binding IsAutorize}">
+
+			<SplitView.Pane>
+				<Grid RowDefinitions="*,*">
+					<StackPanel Grid.Row="0">
+						<Button Command="{Binding ChengeMenuState}"
+							HorizontalAlignment="Stretch"
+							Classes="Menu">
+							<StackPanel Orientation="Horizontal" Margin="5">
+								<Image Source="avares://EduFlow/Assets/Menu.png" Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center"></Image>
+								<TextBlock Text="Меню"
+									   Margin="10,0,0,0"
+									   IsVisible="{Binding IsOpenMenu}"/>
+							</StackPanel>
+						</Button>
+						
+						<Button Command="{Binding ChengeMenuState}"
+							HorizontalAlignment="Stretch"
+							Classes="Menu">
+							<StackPanel Orientation="Horizontal" Margin="5">
+								<Image Source="avares://EduFlow/Assets/Folder.png" Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center"></Image>
+								<TextBlock Text="Курсы"
+									   Margin="10,0,0,0"
+									   IsVisible="{Binding IsOpenMenu}"/>
+							</StackPanel>
+						</Button>
+						
+						<Button Command="{Binding ChengeMenuState}"
+							HorizontalAlignment="Stretch"
+							Classes="Menu">
+							<StackPanel Orientation="Horizontal" Margin="5">
+								<Image Source="avares://EduFlow/Assets/MySpace.png" Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center"></Image>
+								<TextBlock Text="Пользователи"
+									   Margin="10,0,0,0"
+									   IsVisible="{Binding IsOpenMenu}"/>
+							</StackPanel>
+						</Button>
+					</StackPanel>
+					<Button VerticalAlignment="Bottom" 
+							Grid.Row="1" 
+							Command="{Binding ChengeMenuState}" 
+							Margin="5,10"
+							HorizontalAlignment="Stretch"
+							Classes="Menu">
+						<StackPanel Orientation="Horizontal" Margin="5">
+							<Image Source="avares://EduFlow/Assets/Test Account.png" Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center"></Image>
+							<TextBlock Text="Профиль"
+								   Margin="10,0,0,0"
+								   IsVisible="{Binding IsOpenMenu}"/>
+						</StackPanel>
+					</Button>
+				</Grid>
+			</SplitView.Pane>
+		</SplitView>
+	</Grid>
+</Window>

@@ -33,9 +33,7 @@ namespace EduFlowApi.Controllers
                     return BadRequest("This date has not arrived yet!");
                 }
 
-                //D:\Progect\pp+diplom\study_1c\api\Study1CApi\Logs\Study1CApiLog-20250416.txt
-
-                var filepath = Path.Combine(Directory.GetCurrentDirectory(), "Logs", $"Study1CApiLog-{date.ToString("yyyyMMdd")}.txt");
+                var filepath = Path.Combine(Directory.GetCurrentDirectory(), "Logs", $"EduFlowApiLog-{date.ToString("yyyyMMdd")}.txt");
                 var provider = new FileExtensionContentTypeProvider();
                 if (!provider.TryGetContentType(filepath, out var contentType))
                 {
@@ -45,7 +43,7 @@ namespace EduFlowApi.Controllers
                 var bytes = await System.IO.File.ReadAllBytesAsync(filepath);
                 var file = new FileContentResult(bytes, contentType)
                 {
-                    FileDownloadName = $"Study1CApiLog-{date.ToString()}.txt"
+                    FileDownloadName = $"EduFlowApiLog-{date.ToString()}.txt"
                 };
 
                 if (!ModelState.IsValid)
