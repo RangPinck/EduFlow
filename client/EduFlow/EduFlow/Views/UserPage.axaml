@@ -5,7 +5,7 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="EduFlow.UserPage"
 			 xmlns:vm="using:EduFlow.ViewModels"
-			 x:DataType="vm:UserPageVM"
+			 x:DataType="vm:UsersPageVM"
 			 >
 	<Grid RowDefinitions="80, *, 80">
 		<TextBlock Classes="Header">Пользователи</TextBlock>
@@ -15,8 +15,7 @@
 				<ListBox ItemsSource="{Binding Users}" Margin="20,0" CornerRadius="10">
 					<ListBox.ItemTemplate>
 						<DataTemplate>
-							<Border Margin="2" CornerRadius="10" Classes="ItemList">
-
+							<Border Classes="ItemList">
 								<Grid RowDefinitions="*,*" ColumnDefinitions="*,*">
 									<TextBlock Margin="10,0" Classes="Header" HorizontalAlignment="Left" VerticalAlignment="Center">
 										<TextBlock.Text>
@@ -43,9 +42,15 @@
 											</TextBlock.Text>
 										</TextBlock>
 									</StackPanel>
-									<Button Grid.RowSpan="1" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Command="{Binding $parent[UserControl].((vm:UserPageVM)DataContext).UpdateUser}" CommandParameter="{Binding $parent[ListBox].SelectedItem}" Classes="ListButton">
-										<Image Source="/Assets/Edit.png" Width="30" Height="30"></Image>
-									</Button>
+									<StackPanel Orientation="Horizontal" Grid.RowSpan="1" Grid.Column="1" HorizontalAlignment="Right">
+										<Button  HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding $parent[UserControl].((vm:UsersPageVM)DataContext).UpdateUser}" CommandParameter="{Binding $parent[ListBox].SelectedItem}" Classes="ListButton">
+											<Image Source="/Assets/Edit.png" Width="30" Height="30"></Image>
+										</Button>
+
+										<Button HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding $parent[UserControl].((vm:UsersPageVM)DataContext).GetStatisticUser}" CommandParameter="{Binding $parent[ListBox].SelectedItem}" Classes="ListButton">
+											<Image Source="/Assets/Info.png" Width="30" Height="30"></Image>
+										</Button>
+									</StackPanel>
 								</Grid>
 							</Border>
 						</DataTemplate>

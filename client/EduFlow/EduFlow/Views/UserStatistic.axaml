@@ -1,0 +1,78 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="EduFlow.UserStatistic"
+			 xmlns:vm="using:EduFlow.ViewModels"
+			 x:DataType="vm:UserStatisticVM">
+	<Grid RowDefinitions="80, *, 80">
+		<TextBlock Classes="Header">Статистика</TextBlock>
+		<Button Classes="Cansel" HorizontalAlignment="Left" Margin="5" Command="{Binding GoToBack}">Назад</Button>
+		<Grid Grid.Row="1" RowDefinitions="Auto, *">
+			<TextBlock HorizontalAlignment="Center" Margin="10">
+				<Run Text="Статистика "></Run>
+				<Run Text="{Binding UserData.UserSurname} "></Run>
+				<Run Text="{Binding UserData.UserName} "></Run>
+				<Run Text="{Binding UserData.UserPatronymic} "></Run>
+			</TextBlock>
+			<ListBox Grid.Row="1" ItemsSource="{Binding UserData.UserStatistics}">
+				<ListBox.ItemTemplate>
+					<DataTemplate>
+						<Border Classes="ItemList">
+							<Grid RowDefinitions="*,*, *, *" ColumnDefinitions="*,*">
+
+								<TextBlock Grid.Row="0" Grid.Column="0" Classes="Header" FontSize="20" HorizontalAlignment="Left">
+									<Run Text="Блок: "></Run>
+									<Run Text="{Binding BlockName}"></Run>
+								</TextBlock>
+
+								<TextBlock Grid.Row="0" Grid.Column="1" FontSize="20" HorizontalAlignment="Left">
+									<Run Text="Id: "></Run>
+									<Run Text="{Binding BlockId}"></Run>
+								</TextBlock>
+
+								<TextBlock Grid.Row="1" Grid.Column="0" FontSize="20" HorizontalAlignment="Left">
+									<Run Text="Общее количество задач: "></Run>
+									<Run Text="{Binding FullyCountTask}"></Run>
+									<Run Text=" шт."></Run>
+								</TextBlock>
+
+								<TextBlock Grid.Row="3" Grid.Column="0" FontSize="20" HorizontalAlignment="Left">
+									<Run Text="Процент выполненных задач: "></Run>
+									<Run Text="{Binding PercentCompletedTask}"></Run>
+									<Run Text=" %"></Run>
+								</TextBlock>
+
+								<TextBlock Grid.Row="2" Grid.Column="0" FontSize="20">
+									<Run Text="Выполненное количество задач: "></Run>
+									<Run Text="{Binding CompletedTaskCount}"></Run>
+									<Run Text=" шт."></Run>
+								</TextBlock>
+
+								<TextBlock Grid.Row="1" Grid.Column="1" FontSize="20" HorizontalAlignment="Left">
+									<Run Text="Общее количество времени на задачи: "></Run>
+									<Run Text="{Binding FullyDurationNeeded}"></Run>
+									<Run Text=" часов"></Run>
+								</TextBlock>
+
+								<TextBlock Grid.Row="2" Grid.Column="1" FontSize="20">
+									<Run Text="Время затраченное на выполнение задач: "></Run>
+									<Run Text="{Binding DurationCompletedTask}"></Run>
+									<Run Text=" часов"></Run>
+								</TextBlock>
+
+								<TextBlock Grid.Row="3" Grid.Column="1" FontSize="20">
+									<Run Text="процент затраченного времени: "></Run>
+									<Run Text="{Binding PercentDurationCompletedTask}"></Run>
+									<Run Text=" %"></Run>
+								</TextBlock>
+
+							</Grid>
+						</Border>
+					</DataTemplate>
+				</ListBox.ItemTemplate>
+			</ListBox>
+		</Grid>
+	</Grid>
+</UserControl>

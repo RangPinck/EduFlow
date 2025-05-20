@@ -34,9 +34,10 @@
 				</TextBlock>
 			</StackPanel>
 		</Grid>
-		<Grid Grid.Row="2" ColumnDefinitions="*,20,*">
+		<Grid Grid.Row="2" ColumnDefinitions="*,20,*,20,*">
 			<Button Grid.Column="0" Command="{Binding EditProfile}">Изменить профиль</Button>
-			<Button Grid.Column="2" Command="{Binding LogOut}" Classes="Cansel">Выход</Button>
+			<Button Grid.Column="2" Command="{Binding GetUserStatistic}">Статистика</Button>
+			<Button Grid.Column="4" Command="{Binding LogOut}" Classes="Cansel">Выход</Button>
 		</Grid>
 	</Grid>
 </UserControl>

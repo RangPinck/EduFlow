@@ -32,5 +32,10 @@ namespace EduFlow.ViewModels
                 MainWindowViewModel.Instance.PageContent = new Login();
             }
         }
+
+        public void GetUserStatistic()
+        {
+            MainWindowViewModel.Instance.PageContent = new UserStatistic(MainWindowViewModel.User.Id, new Profile());
+        }
     }
 }

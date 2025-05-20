@@ -8,6 +8,6 @@ public partial class UserPage : UserControl
     public UserPage()
     {
         InitializeComponent();
-        DataContext = new UserPageVM();
+        DataContext = new UsersPageVM();
     }
 }

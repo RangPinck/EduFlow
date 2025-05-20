@@ -3,12 +3,11 @@ using EduFlowApi.DTOs.AuthDTO;
 using EduFlowApi.DTOs.UserDTOs;
 using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace EduFlow.ViewModels
 {
-    public partial class UserPageVM : ViewModelBase
+    public partial class UsersPageVM : ViewModelBase
     {
         [ObservableProperty]
         private List<UserDTO> _users = new();
@@ -16,7 +15,7 @@ namespace EduFlow.ViewModels
         [ObservableProperty]
         private bool _visibleList = true;
 
-        public UserPageVM()
+        public UsersPageVM()
         {
             GetUsers();
         }
@@ -59,6 +58,17 @@ namespace EduFlow.ViewModels
         public void AddUser()
         {
             MainWindowViewModel.Instance.PageContent = new EditProfile(new UserPage());
+        }
+
+        public async Task GetStatisticUser(UserDTO user)
+        {
+            if (user is null)
+            {
+                await MainWindowViewModel.ErrorMessage("Пользователи", "Для совершения действия выбурите пользователя, нажав на него!");
+                return;
+            }
+
+            MainWindowViewModel.Instance.PageContent = new UserStatistic(user.UserId, new UserPage());
         }
     }
 }

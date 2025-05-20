@@ -7,7 +7,9 @@
         x:Class="EduFlow.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/Flow.ico"
-        Title="EduFlow">
+        Title="EduFlow"
+		MinWidth="600"
+		MinHeight="350">
 
 	<Design.DataContext>
 		<vm:MainWindowViewModel/>
@@ -37,7 +39,7 @@
 								</StackPanel>
 							</Button>
 
-							<Button Command="{Binding ChengeMenuState}"
+							<Button Command="{Binding GoToCoursesPage}"
 								HorizontalAlignment="Stretch"
 								Classes="Menu">
 								<StackPanel Orientation="Horizontal" Margin="5">

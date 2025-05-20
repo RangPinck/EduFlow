@@ -1,0 +1,52 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="EduFlow.BlokPage"
+             xmlns:vm="using:EduFlow.ViewModels"
+			 x:DataType="vm:BlockPageVM"
+>
+
+	<Grid RowDefinitions="80,*,80">
+		<TextBlock Classes="Header">
+			<Run Text="Блоки курса "/>
+			<Run Text="{Binding Course.CourseName}"/>
+		</TextBlock>
+		<Grid Grid.Row="1">
+			<ListBox ItemsSource="{Binding Blocks}" Margin="20,0" CornerRadius="10">
+				<ListBox.ItemTemplate>
+					<DataTemplate>
+						<Border Classes="ItemList">
+							<Grid RowDefinitions="*,*" ColumnDefinitions="*,*,*" Margin="5">
+								<TextBlock Grid.Row="0" Grid.Column="0" Classes="Header" HorizontalAlignment="Left" FontSize="25" VerticalAlignment="Center" TextWrapping="WrapWithOverflow">
+									<Run Text="{Binding BlockNumberOfCourse}"/>
+									<Run Text=". "/>
+									<Run Text="{Binding BlockName}"/>
+								</TextBlock>
+
+								<TextBlock Grid.Row="1" Grid.Column="0" TextWrapping="WrapWithOverflow">
+									<Run Text="Дата создания: "/>
+									<Run Text="{Binding BlockDateCreated}"/>
+								</TextBlock>
+
+								<TextBlock Grid.Row="0" Grid.Column="1"  VerticalAlignment="Center" FontSize="14" Text="{Binding Description}" TextWrapping="WrapWithOverflow"></TextBlock>
+								<StackPanel Orientation="Horizontal" Grid.RowSpan="1" Grid.Column="2" HorizontalAlignment="Right">
+									<Button  HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding $parent[UserControl].((vm:BlockPageVM)DataContext)}" CommandParameter="{Binding $parent[ListBox].SelectedItem}" Classes="ListButton">
+										<Image Source="/Assets/Edit.png" Width="30" Height="30"></Image>
+									</Button>
+
+									<Button HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding $parent[UserControl].((vm:BlockPageVM)DataContext)}" CommandParameter="{Binding $parent[ListBox].SelectedItem}" Classes="ListButton">
+										<Image Source="/Assets/Document.png" Width="30" Height="30"></Image>
+									</Button>
+								</StackPanel>
+							</Grid>
+						</Border>
+					</DataTemplate>
+				</ListBox.ItemTemplate>
+			</ListBox>
+		</Grid>
+		<Button Grid.Row="2" Command="{Binding AddBlock}">Добавить блок</Button>
+	</Grid>
+
+</UserControl>

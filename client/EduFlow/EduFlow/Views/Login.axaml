@@ -7,10 +7,10 @@
 			 xmlns:vm="using:EduFlow.ViewModels"
 			 x:DataType="vm:LoginVM"
 			 >
-	<Grid RowDefinitions="*,*,*">
-		<TextBlock Classes="Header">Вход</TextBlock>
-		<Grid Grid.Row="1" RowDefinitions="*,*" MaxWidth="400">
-			<StackPanel Classes="">
+	<Grid RowDefinitions="*,*,*" ColumnDefinitions="*,2*,*">
+		<TextBlock Classes="Header" Grid.Column="1">Вход</TextBlock>
+		<Grid Grid.Row="1" Grid.Column="1" RowDefinitions="*,*" MaxWidth="400">
+			<StackPanel>
 				<TextBlock Classes="InputHeader">Логин:</TextBlock>
 				<TextBox Text="{Binding LoginData.Email}"></TextBox>
 			</StackPanel>
@@ -19,6 +19,6 @@
 				<TextBox Text="{Binding LoginData.Password}" PasswordChar="*"></TextBox>
 			</StackPanel>
 		</Grid>
-		<Button Grid.Row="2" Command="{Binding Authorize}">Войти</Button>
+		<Button Grid.Row="2" Grid.Column="1" Command="{Binding Authorize}">Войти</Button>
 	</Grid>
 </UserControl>

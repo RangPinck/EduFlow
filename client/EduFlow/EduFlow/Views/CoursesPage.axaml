@@ -7,4 +7,39 @@
 			 xmlns:vm="using:EduFlow.ViewModels"
 			 x:DataType="vm:CoursesPageVM">
 
+	<Grid RowDefinitions="80,*,80">
+		<TextBlock Classes="Header" Text="Курсы"/>
+		<Grid Grid.Row="1">
+			<ListBox ItemsSource="{Binding Courses}" Margin="20,0" CornerRadius="10">
+				<ListBox.ItemTemplate>
+					<DataTemplate>
+						<Border Classes="ItemList">
+							<Grid RowDefinitions="*,*" ColumnDefinitions="*, *" Margin="5">
+								<TextBlock Grid.Row="0" Grid.Column="0" Classes="Header" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding CourseName}"></TextBlock>
+								<TextBlock Grid.Row="1" Grid.Column="0"  VerticalAlignment="Center" FontSize="20">
+									<TextBlock.Text>
+										<MultiBinding StringFormat="Автор: {0} {1} {2}">
+											<Binding Path="Author.UserSurname"></Binding>
+											<Binding Path="Author.UserName"></Binding>
+											<Binding Path="Author.UserPatronymic"></Binding>
+										</MultiBinding>
+									</TextBlock.Text>
+								</TextBlock>
+								<StackPanel Orientation="Horizontal" Grid.RowSpan="1" Grid.Column="1" HorizontalAlignment="Right">
+									<Button  HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding $parent[UserControl].((vm:CoursesPageVM)DataContext).EditCourse}" CommandParameter="{Binding $parent[ListBox].SelectedItem}" Classes="ListButton">
+										<Image Source="/Assets/Edit.png" Width="30" Height="30"></Image>
+									</Button>
+
+									<Button HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding $parent[UserControl].((vm:CoursesPageVM)DataContext).ToBlockByCourses}" CommandParameter="{Binding $parent[ListBox].SelectedItem}" Classes="ListButton">
+										<Image Source="/Assets/Folder.png" Width="30" Height="30"></Image>
+									</Button>
+								</StackPanel>
+							</Grid>
+						</Border>
+					</DataTemplate>
+				</ListBox.ItemTemplate>
+			</ListBox>
+		</Grid>
+		<Button Grid.Row="2" Command="{Binding AddCourse}">Добавить курс</Button>
+	</Grid>
 </UserControl>

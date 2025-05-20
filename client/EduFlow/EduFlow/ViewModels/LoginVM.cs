@@ -35,6 +35,7 @@ namespace EduFlow.ViewModels
                         if (MainWindowViewModel.User != null)
                         {
                             MainWindowViewModel.Instance.IsAutorize = true;
+                            MainWindowViewModel.Instance.PageContent = new CoursesPage();
                         }
                     }
                     else

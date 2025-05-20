@@ -15,6 +15,8 @@
 				<Button Classes="Cansel">Текст</Button>
 				<Panel Height="20"></Panel>
 				<Button Classes="Menu">Текст</Button>
+				<Panel Height="20"></Panel>
+				<ComboBox>Текст</ComboBox>
 			</StackPanel>
 		</Border>
 	</Design.PreviewWith>
@@ -127,6 +129,16 @@
 		<Setter Property="BorderBrush" Value="#9EC45F"></Setter>
 		<Setter Property="CornerRadius" Value="10"></Setter>
 		<Setter Property="Background" Value="#9EC45F"></Setter>
+	</Style>
+
+	<Style Selector="ListBox">
+		<Setter Property="Background" Value="White"></Setter>
+	</Style>
+
+	<Style Selector="ComboBox">
+		<Setter Property="BorderThickness" Value="3"></Setter>
+		<Setter Property="BorderBrush" Value="#19B0FF"></Setter>
+		<Setter Property="CornerRadius" Value="10"></Setter>
 	</Style>
 
 </Styles>
