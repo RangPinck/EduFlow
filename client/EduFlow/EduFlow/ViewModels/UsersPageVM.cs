@@ -38,9 +38,12 @@ namespace EduFlow.ViewModels
         {
             if (user is null)
             {
-                await MainWindowViewModel.ErrorMessage("Пользователи", "Для совершения действия выбурите пользователя, нажав на него!");
+                await MainWindowViewModel.ErrorMessage("Пользователи",
+                                                       "Для совершения действия выбурите пользователя, нажав на него!");
                 return;
             }
+
+            MainWindowViewModel.Instance.RegistratePageBefore(nameof(UserPage));
 
             MainWindowViewModel.Instance.PageContent = new EditProfile(new SignInDTO()
             {
@@ -52,12 +55,13 @@ namespace EduFlow.ViewModels
                 UserRole = user.UserRole,
                 IsFirst = user.IsFirst
 
-            }, new UserPage());
+            });
         }
 
         public void AddUser()
         {
-            MainWindowViewModel.Instance.PageContent = new EditProfile(new UserPage());
+            MainWindowViewModel.Instance.RegistratePageBefore(nameof(UserPage));
+            MainWindowViewModel.Instance.PageContent = new EditProfile();
         }
 
         public async Task GetStatisticUser(UserDTO user)
@@ -68,7 +72,9 @@ namespace EduFlow.ViewModels
                 return;
             }
 
-            MainWindowViewModel.Instance.PageContent = new UserStatistic(user.UserId, new UserPage());
+            MainWindowViewModel.Instance.RegistratePageBefore(nameof(UserPage));
+
+            MainWindowViewModel.Instance.PageContent = new UserStatistic(user.UserId);
         }
     }
 }

@@ -13,9 +13,9 @@ public partial class UserStatistic : UserControl
         DataContext = new UserStatisticVM();
     }
 
-    public UserStatistic(Guid userId, UserControl latesPage)
+    public UserStatistic(Guid userId)
     {
         InitializeComponent();
-        DataContext = new UserStatisticVM(userId, latesPage);
+        DataContext = new UserStatisticVM(userId);
     }
 }

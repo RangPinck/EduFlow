@@ -12,13 +12,10 @@ namespace EduFlow.ViewModels
         [ObservableProperty]
         private UserDTO _userData;
 
-        private UserControl _latesPage;
-
         public UserStatisticVM() { }
 
-        public UserStatisticVM(Guid userId, UserControl latesPage)
+        public UserStatisticVM(Guid userId)
         {
-            _latesPage = latesPage;
             if (userId == MainWindowViewModel.User.Id)
             {
                 GetUserData();
@@ -27,8 +24,6 @@ namespace EduFlow.ViewModels
             {
                 GetUserDataById(userId);
             }
-
-
         }
 
         private async Task GetUserData()
@@ -55,7 +50,7 @@ namespace EduFlow.ViewModels
 
         public void GoToBack()
         {
-            MainWindowViewModel.Instance.PageContent = _latesPage;
+            MainWindowViewModel.Instance.GoToPageBefore();
         }
 
     }

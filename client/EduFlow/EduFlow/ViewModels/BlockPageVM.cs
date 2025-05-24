@@ -29,9 +29,9 @@ namespace EduFlow.ViewModels
             Blocks = JsonConvert.DeserializeObject<List<ShortBlockDTO>>(response);
         }
 
-        public void ToCourses()
+        public void GoToBack()
         {
-            MainWindowViewModel.Instance.PageContent = new CoursesPage();
+            MainWindowViewModel.Instance.GoToPageBefore();
         }
 
         public void AddBlock()

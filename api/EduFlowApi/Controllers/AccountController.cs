@@ -215,8 +215,15 @@ namespace EduFlowApi.Controllers
                     if (await _account.UpdateUserProfileAsync(updateUser))
                     {
                         var result = await _userManager.SetEmailAsync(authUser, updateUser.Email);
+
+                        if (!result.Succeeded)
+                        {
+                            Log.Error($"update profile => Incorrect data!");
+                            return BadRequest("Incorrect data!");
+                        }
+
                         authUser.NormalizedEmail = updateUser.Email.ToUpper();
-                        authUser.UserName = updateUser.UserName + " " + updateUser.UserName + " " + updateUser.UserPatronymic;
+                        authUser.UserName = updateUser.UserSurname + updateUser.UserName + updateUser.UserPatronymic;
                         authUser.NormalizedUserName = authUser.UserName.ToUpper();
                         authUser.ConcurrencyStamp = DateTime.UtcNow.ToString();
                         result = await _userManager.UpdateAsync(authUser);
@@ -407,14 +414,14 @@ namespace EduFlowApi.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> DeleteAccount(DeleteAccountDTO deleteUser)
+        public async Task<IActionResult> DeleteAccount([FromQuery] Guid userId)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                var appUser = await _userManager.FindByIdAsync(deleteUser.UserId.ToString());
+                var appUser = await _userManager.FindByIdAsync(userId.ToString());
 
                 if (appUser == null) return BadRequest("There is no such user in the database!");
 

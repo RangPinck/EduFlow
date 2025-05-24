@@ -26,8 +26,8 @@
 									</TextBlock.Text>
 								</TextBlock>
 								<StackPanel Orientation="Horizontal" Grid.RowSpan="1" Grid.Column="1" HorizontalAlignment="Right">
-									<Button  HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding $parent[UserControl].((vm:CoursesPageVM)DataContext).EditCourse}" CommandParameter="{Binding $parent[ListBox].SelectedItem}" Classes="ListButton">
-										<Image Source="/Assets/Edit.png" Width="30" Height="30"></Image>
+									<Button  HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding $parent[UserControl].((vm:CoursesPageVM)DataContext).EditCourse}" CommandParameter="{Binding $parent[ListBox].SelectedItem}" Classes="ListButton" IsVisible="{Binding $parent[UserControl].((vm:CoursesPageVM)DataContext).IsAdminKurator}">
+										<Image Source="/Assets/Edit.png" Width="30" Height="30" ></Image>
 									</Button>
 
 									<Button HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding $parent[UserControl].((vm:CoursesPageVM)DataContext).ToBlockByCourses}" CommandParameter="{Binding $parent[ListBox].SelectedItem}" Classes="ListButton">
@@ -40,6 +40,6 @@
 				</ListBox.ItemTemplate>
 			</ListBox>
 		</Grid>
-		<Button Grid.Row="2" Command="{Binding AddCourse}">Добавить курс</Button>
+		<Button Grid.Row="2" Command="{Binding AddCourse}" IsVisible="{Binding IsAdminKurator}">Добавить курс</Button>
 	</Grid>
 </UserControl>

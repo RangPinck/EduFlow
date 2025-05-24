@@ -11,20 +11,37 @@ namespace EduFlow.ViewModels
         [ObservableProperty]
         private SignInDTO _profile;
 
+        //**сделать получение пользователя
+
         public ProfileVM()
         {
-            Profile = MainWindowViewModel.User;
+            Profile = new SignInDTO()
+            {
+                Id = MainWindowViewModel.User.Id,
+                Email = MainWindowViewModel.User.Email,
+                UserSurname = MainWindowViewModel.User.UserName,
+                UserName = MainWindowViewModel.User.UserName,
+                UserPatronymic = MainWindowViewModel.User.UserPatronymic,
+                IsFirst = MainWindowViewModel.User.IsFirst,
+                UserRole = MainWindowViewModel.User.UserRole,
+                Token = MainWindowViewModel.User.Token,
+            };
             Profile.UserPatronymic = string.IsNullOrEmpty(Profile.UserPatronymic) ? "-" : Profile.UserPatronymic;
         }
 
         public void EditProfile()
         {
-            MainWindowViewModel.Instance.PageContent = new EditProfile(MainWindowViewModel.User, new Profile());
+            MainWindowViewModel.Instance.RegistratePageBefore(nameof(Profile));
+            MainWindowViewModel.Instance.PageContent = new EditProfile(MainWindowViewModel.User);
         }
 
         public async Task LogOut()
         {
-            var result = await MessageBoxManager.GetMessageBoxStandard("Выход из аккаунта", "Вы действительно хотите выйти из аккаунта?", MsBox.Avalonia.Enums.ButtonEnum.YesNo, MsBox.Avalonia.Enums.Icon.Question).ShowAsync();
+            var result = await MessageBoxManager.GetMessageBoxStandard(
+                "Выход из аккаунта",
+                "Вы действительно хотите выйти из аккаунта?",
+                MsBox.Avalonia.Enums.ButtonEnum.YesNo,
+                MsBox.Avalonia.Enums.Icon.Question).ShowAsync();
 
             if (result == ButtonResult.Yes)
             {
@@ -35,7 +52,8 @@ namespace EduFlow.ViewModels
 
         public void GetUserStatistic()
         {
-            MainWindowViewModel.Instance.PageContent = new UserStatistic(MainWindowViewModel.User.Id, new Profile());
+            MainWindowViewModel.Instance.RegistratePageBefore(nameof(Profile));
+            MainWindowViewModel.Instance.PageContent = new UserStatistic(MainWindowViewModel.User.Id);
         }
     }
 }

@@ -1,9 +1,13 @@
 ﻿using Avalonia.Controls;
+using Avalonia.OpenGL.Surfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
 using EduFlow.ApiConnect;
 using EduFlowApi.DTOs.AuthDTO;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
 using MsBox.Avalonia;
+using System;
 using System.Net;
+using System.Reflection.Metadata;
 using System.Threading.Tasks;
 
 namespace EduFlow.ViewModels
@@ -24,6 +28,14 @@ namespace EduFlow.ViewModels
 
         [ObservableProperty]
         private bool _isOpenMenu = false;
+
+        [ObservableProperty]
+        private bool _isAdminKurator = false;
+
+        [ObservableProperty]
+        private bool _isAdmin = false;
+
+        private string _pageBefore = string.Empty;
 
         public static MainWindowViewModel Instance;
 
@@ -78,6 +90,23 @@ namespace EduFlow.ViewModels
         public void GoToCoursesPage()
         {
             PageContent = new CoursesPage();
+        }
+
+        public void RegistratePageBefore(string nameControl)
+        {
+            _pageBefore = nameControl;
+        }
+
+        public void GoToPageBefore()
+        {
+            PageContent = _pageBefore switch
+            {
+                nameof(BlokPage) => new BlokPage(),
+                nameof(CoursesPage) => new CoursesPage(),
+                nameof(Login) => new Login(),
+                nameof(Profile) => new Profile(),
+                nameof(UserPage) => new UserPage(),
+            };
         }
     }
 }

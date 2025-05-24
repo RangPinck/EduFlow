@@ -17,6 +17,16 @@
 				<Button Classes="Menu">Текст</Button>
 				<Panel Height="20"></Panel>
 				<ComboBox>Текст</ComboBox>
+				<Panel Height="20"></Panel>
+				<Expander>
+					<Expander.Header>
+						<Grid RowDefinitions="*,*,*">
+							<TextBlock Grid.Row="0" >Текст</TextBlock>
+							<TextBlock Grid.Row="1" >Текст</TextBlock>
+							<TextBlock Grid.Row="2" >Текст</TextBlock>
+						</Grid>
+					</Expander.Header>
+				</Expander>
 			</StackPanel>
 		</Border>
 	</Design.PreviewWith>
@@ -136,6 +146,14 @@
 	</Style>
 
 	<Style Selector="ComboBox">
+		<Setter Property="HorizontalAlignment" Value="Center"></Setter>
+		<Setter Property="BorderThickness" Value="3"></Setter>
+		<Setter Property="BorderBrush" Value="#19B0FF"></Setter>
+		<Setter Property="CornerRadius" Value="10"></Setter>
+	</Style>
+
+	<Style Selector="Expander">
+		<Setter Property="HorizontalAlignment" Value="Center"></Setter>
 		<Setter Property="BorderThickness" Value="3"></Setter>
 		<Setter Property="BorderBrush" Value="#19B0FF"></Setter>
 		<Setter Property="CornerRadius" Value="10"></Setter>

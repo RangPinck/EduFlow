@@ -25,7 +25,7 @@ namespace EduFlowApi.Controllers
         [ProducesResponseType(200, Type = typeof(IEnumerable<RoleDTO>))]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        [Authorize(Roles = "Администратор")]
+        [Authorize]
         public async Task<IActionResult> GetAllRoles()
         {
             try

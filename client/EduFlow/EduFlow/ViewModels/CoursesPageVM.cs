@@ -1,10 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using EduFlowApi.DTOs.CourseDTOs;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace EduFlow.ViewModels
@@ -14,9 +11,13 @@ namespace EduFlow.ViewModels
         [ObservableProperty]
         private List<ShortCourseDTO> _courses = new();
 
+        [ObservableProperty]
+        private bool _isAdminKurator = false;
+
         public CoursesPageVM()
         {
             GetCourses();
+            IsAdminKurator = MainWindowViewModel.Instance.IsAdminKurator;
         }
 
         public void AddCourse()
@@ -32,6 +33,7 @@ namespace EduFlow.ViewModels
                 return;
             }
 
+            MainWindowViewModel.Instance.RegistratePageBefore(nameof(CoursesPage));
             MainWindowViewModel.Instance.PageContent = new UpdateCourse(course);
         }
 
@@ -49,6 +51,7 @@ namespace EduFlow.ViewModels
                 return;
             }
 
+            MainWindowViewModel.Instance.RegistratePageBefore(nameof(CoursesPage));
             MainWindowViewModel.Instance.PageContent = new BlokPage(course);
         }
     }

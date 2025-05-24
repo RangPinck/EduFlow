@@ -52,7 +52,7 @@
 
 							<Button Command="{Binding GoToUserPage}"
 								HorizontalAlignment="Stretch"
-								Classes="Menu">
+								Classes="Menu" IsVisible="{Binding IsAdminKurator}">
 								<StackPanel Orientation="Horizontal" Margin="5">
 									<Image Source="avares://EduFlow/Assets/MySpace.png" Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center"></Image>
 									<TextBlock Text="Пользователи"

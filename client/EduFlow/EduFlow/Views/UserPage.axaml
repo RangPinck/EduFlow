@@ -20,8 +20,8 @@
 									<TextBlock Margin="10,0" Classes="Header" HorizontalAlignment="Left" VerticalAlignment="Center">
 										<TextBlock.Text>
 											<MultiBinding StringFormat="{}{0} {1} {2}">
-												<Binding Path="UserName"></Binding>
 												<Binding Path="UserSurname"></Binding>
+												<Binding Path="UserName"></Binding>
 												<Binding Path="UserPatronymic"></Binding>
 											</MultiBinding>
 										</TextBlock.Text>

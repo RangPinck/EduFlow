@@ -2,6 +2,8 @@
 using EduFlowApi.DTOs.AuthDTO;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace EduFlow.ViewModels
@@ -14,7 +16,9 @@ namespace EduFlow.ViewModels
         public LoginVM()
         {
             LoginData = new LoginDTO()
+            //убрать
             {
+
                 Email = "admin@admin.com",
                 Password = "admin1cdbapi",
             };
@@ -35,6 +39,12 @@ namespace EduFlow.ViewModels
                         if (MainWindowViewModel.User != null)
                         {
                             MainWindowViewModel.Instance.IsAutorize = true;
+
+                            MainWindowViewModel.Instance.IsAdminKurator = new List<string>() { "Администратор", "Куратор" }
+                                                                                            .Any(x => x == MainWindowViewModel.User.UserRole[0]);
+
+                            MainWindowViewModel.Instance.IsAdmin = MainWindowViewModel.User.UserRole[0] == "Администратор";
+
                             MainWindowViewModel.Instance.PageContent = new CoursesPage();
                         }
                     }
