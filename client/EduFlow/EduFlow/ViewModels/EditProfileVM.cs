@@ -32,6 +32,9 @@ namespace EduFlow.ViewModels
         private bool _deleteView = false;
 
         [ObservableProperty]
+        private bool _updatePasswordView = false;
+
+        [ObservableProperty]
         private List<RoleDTO> _roles;
 
         [ObservableProperty]
@@ -57,6 +60,8 @@ namespace EduFlow.ViewModels
             IsAdmin = MainWindowViewModel.Instance.IsAdmin && MainWindowViewModel.User.Id != user.Id;
 
             DeleteView = MainWindowViewModel.Instance.IsAdminKurator && MainWindowViewModel.User.Id != user.Id;
+
+            UpdatePasswordView = IsAdmin || MainWindowViewModel.User.Id == user.Id;
 
             GetAllRoles(user);
         }

@@ -223,8 +223,8 @@ namespace EduFlowApi.Controllers
                         }
 
                         authUser.NormalizedEmail = updateUser.Email.ToUpper();
-                        authUser.UserName = updateUser.UserSurname + updateUser.UserName + updateUser.UserPatronymic;
-                        authUser.NormalizedUserName = authUser.UserName.ToUpper();
+                        //authUser.UserName = updateUser.UserSurname + updateUser.UserName + updateUser.UserPatronymic;
+                        //authUser.NormalizedUserName = authUser.UserName.ToUpper();
                         authUser.ConcurrencyStamp = DateTime.UtcNow.ToString();
                         result = await _userManager.UpdateAsync(authUser);
 
@@ -414,7 +414,7 @@ namespace EduFlowApi.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> DeleteAccount([FromQuery] Guid userId)
+        public async Task<IActionResult> DeleteAccount(Guid userId)
         {
             try
             {

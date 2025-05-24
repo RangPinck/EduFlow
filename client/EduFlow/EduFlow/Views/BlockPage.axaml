@@ -18,16 +18,21 @@
 
 			<Grid RowDefinitions="Auto, *">
 
-				<Grid Margin="0,0,0,10" RowDefinitions="*,*,*">
+				<Grid Margin="0,0,0,10" RowDefinitions="*,*,*,*">
 					<TextBlock Grid.Row="0" TextWrapping="Wrap" Margin="0,0,0,5">
-						<Run Text="Дата создания: "></Run>
-						<Run Text="{Binding Course.CourseDataCreate}"></Run>
-
+						<Run Text="Автор: "></Run>
+						<Run Text="{Binding Course.Author.UserSurname} "></Run>
+						<Run Text="{Binding Course.Author.UserName} "></Run>
+						<Run Text="{Binding Course.Author.UserPatronymic}"></Run>
 					</TextBlock>
 					<TextBlock Grid.Row="1" TextWrapping="Wrap" Margin="0,0,0,5">
-						<Run Text="{Binding Course.Description}"></Run>
+						<Run Text="Дата создания: "></Run>
+						<Run Text="{Binding Course.CourseDataCreate}"></Run>
 					</TextBlock>
 					<TextBlock Grid.Row="2" TextWrapping="Wrap" Margin="0,0,0,5">
+						<Run Text="{Binding Course.Description}"></Run>
+					</TextBlock>
+					<TextBlock Grid.Row="3" TextWrapping="Wrap" Margin="0,0,0,5">
 						<Run Text="{Binding Course.Link}"></Run>
 					</TextBlock>
 				</Grid>
@@ -50,11 +55,11 @@
 
 									<TextBlock Grid.Row="0" Grid.Column="1"  VerticalAlignment="Center" FontSize="14" Text="{Binding Description}" TextWrapping="WrapWithOverflow"></TextBlock>
 									<StackPanel Orientation="Horizontal" Grid.RowSpan="1" Grid.Column="2" HorizontalAlignment="Right">
-										<Button  HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding $parent[UserControl].((vm:BlockPageVM)DataContext)}" CommandParameter="{Binding $parent[ListBox].SelectedItem}" Classes="ListButton">
+										<Button  HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding $parent[UserControl].((vm:BlockPageVM)DataContext)}" CommandParameter="{Binding $parent[ListBox].SelectedItem}" Classes="ListButton" >
 											<Image Source="/Assets/Edit.png" Width="30" Height="30"></Image>
 										</Button>
 
-										<Button HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding $parent[UserControl].((vm:BlockPageVM)DataContext)}" CommandParameter="{Binding $parent[ListBox].SelectedItem}" Classes="ListButton">
+										<Button IsVisible="{Binding $parent[UserControl].((vm:BlockPageVM)DataContext).IsAdminKurator}" HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding $parent[UserControl].((vm:BlockPageVM)DataContext)}" CommandParameter="{Binding $parent[ListBox].SelectedItem}" Classes="ListButton">
 											<Image Source="/Assets/Document.png" Width="30" Height="30"></Image>
 										</Button>
 									</StackPanel>
@@ -66,39 +71,11 @@
 
 			</Grid>
 		</ScrollViewer>
+		<StackPanel Grid.Row="2" HorizontalAlignment="Center" Orientation="Horizontal" IsVisible="{Binding IsAdminKurator}">
+			<Button  Command="{Binding AddBlock}">Добавить блок</Button>
+			<Button Command="{Binding }">Подписать пользователя</Button>
+		</StackPanel>
 
-		<!--<ListBox ItemsSource="{Binding Blocks}" Margin="20,0" CornerRadius="10">
-				<ListBox.ItemTemplate>
-					<DataTemplate>
-						<Border Classes="ItemList">
-							<Grid RowDefinitions="*,*" ColumnDefinitions="*,*,*" Margin="5">
-								<TextBlock Grid.Row="0" Grid.Column="0" Classes="Header" HorizontalAlignment="Left" FontSize="25" VerticalAlignment="Center" TextWrapping="WrapWithOverflow">
-									<Run Text="{Binding BlockNumberOfCourse}"/>
-									<Run Text=". "/>
-									<Run Text="{Binding BlockName}"/>
-								</TextBlock>
-
-								<TextBlock Grid.Row="1" Grid.Column="0" TextWrapping="WrapWithOverflow">
-									<Run Text="Дата создания: "/>
-									<Run Text="{Binding BlockDateCreated}"/>
-								</TextBlock>
-
-								<TextBlock Grid.Row="0" Grid.Column="1"  VerticalAlignment="Center" FontSize="14" Text="{Binding Description}" TextWrapping="WrapWithOverflow"></TextBlock>
-								<StackPanel Orientation="Horizontal" Grid.RowSpan="1" Grid.Column="2" HorizontalAlignment="Right">
-									<Button  HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding $parent[UserControl].((vm:BlockPageVM)DataContext)}" CommandParameter="{Binding $parent[ListBox].SelectedItem}" Classes="ListButton">
-										<Image Source="/Assets/Edit.png" Width="30" Height="30"></Image>
-									</Button>
-
-									<Button HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding $parent[UserControl].((vm:BlockPageVM)DataContext)}" CommandParameter="{Binding $parent[ListBox].SelectedItem}" Classes="ListButton">
-										<Image Source="/Assets/Document.png" Width="30" Height="30"></Image>
-									</Button>
-								</StackPanel>
-							</Grid>
-						</Border>
-					</DataTemplate>
-				</ListBox.ItemTemplate>
-			</ListBox>-->
-		<Button Grid.Row="2" Command="{Binding AddBlock}">Добавить блок</Button>
 	</Grid>
 
 </UserControl>

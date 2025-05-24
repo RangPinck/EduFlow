@@ -28,6 +28,13 @@ namespace EduFlow.ViewModels
         private bool _isEdit = false;
 
         [ObservableProperty]
+        private bool _isAdmin = false;
+
+        [ObservableProperty]
+        private bool _isUpdateAuthor = false;
+
+
+        [ObservableProperty]
         private List<UserDTO> _users = new();
 
         public UpdateCourseVM()
@@ -43,16 +50,28 @@ namespace EduFlow.ViewModels
             CourseFull.Title = course.CourseName;
             CourseFull.Link = course.Link;
             CourseFull.Description = course.Description;
+            IsAdmin = MainWindowViewModel.Instance.IsAdmin;
             GetAuthors(MainWindowViewModel.User.Token);
             _isEdit = true;
+
+            IsUpdateAuthor = !IsEdit || IsAdmin;
             Header = $"Изменение курса \"{CourseFull.Title}\"";
         }
 
         private async Task GetAuthors(string token)
         {
             var response = await MainWindowViewModel.ApiClient.GetCourses();
-            Users = JsonConvert.DeserializeObject<List<UserDTO>>(response);
-            Users = [new UserDTO() { UserSurname = "Не выбрано", UserName = string.Empty, UserPatronymic = string.Empty }, .. Users];
+            Users = JsonConvert.DeserializeObject<List<UserDTO>>(response).ToList();
+
+            if (IsAdmin)
+            {
+                Users = [new UserDTO() { UserSurname = "Не выбрано", UserName = string.Empty, UserPatronymic = string.Empty }, .. Users];
+            }
+            else
+            {
+                Users = Users.Where(x => x.UserId == MainWindowViewModel.User.Id).ToList();
+            }
+
             AuthorIndex = Users.IndexOf(Users.First(x => x.UserId == MainWindowViewModel.User.Id));
         }
 

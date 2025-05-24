@@ -15,10 +15,14 @@ namespace EduFlow.ViewModels
         [ObservableProperty]
         private ShortCourseDTO _course = new();
 
+        [ObservableProperty]
+        private bool _isAdminKurator = false;
+
         public BlockPageVM() { }
 
         public BlockPageVM(ShortCourseDTO course)
         {
+            IsAdminKurator = MainWindowViewModel.Instance.IsAdminKurator;
             _course = course;
             GetBlocks(course);
         }

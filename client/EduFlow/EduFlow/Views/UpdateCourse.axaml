@@ -29,7 +29,7 @@
 						<TextBox Text="{Binding CourseFull.Description}" TextWrapping="Wrap" MinHeight="100"></TextBox>
 					</StackPanel>
 
-					<StackPanel IsVisible="{Binding !IsEdit}">
+					<StackPanel IsVisible="{Binding IsUpdateAuthor}">
 						<TextBlock Classes="InputHeader">Автор:</TextBlock>
 						<ComboBox Width="350" Height="40"  ItemsSource="{Binding Users}" SelectedIndex="{Binding AuthorIndex}">
 							<ComboBox.ItemTemplate>

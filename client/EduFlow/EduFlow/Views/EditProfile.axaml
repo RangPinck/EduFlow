@@ -68,7 +68,7 @@
 						<TextBox Text="{Binding FullUser.UserPatronymic}"></TextBox>
 					</StackPanel>
 
-					<Expander Grid.Row="4" Header="Смена пароля" Width="400" Margin="0,10">
+					<Expander Grid.Row="4" Header="Смена пароля" Width="400" Margin="0,10" IsVisible="{Binding UpdatePasswordView}">
 						<Grid RowDefinitions="*,*" Margin="5">
 							<StackPanel Grid.Row="0">
 								<TextBlock Classes="InputHeader">Пароль:</TextBlock>

@@ -148,7 +148,7 @@ namespace EduFlow.ApiConnect
         {
             Client.DefaultRequestHeaders.Authorization =
              new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", MainWindowViewModel.User.Token);
-            HttpResponseMessage response = await Client.DeleteAsync($"Account/DeleteAccount&userId={userId}");
+            HttpResponseMessage response = await Client.DeleteAsync($"Account/DeleteAccount?userId={userId}");
             string responseBody = await response.Content.ReadAsStringAsync();
 
             if (!response.IsSuccessStatusCode)
