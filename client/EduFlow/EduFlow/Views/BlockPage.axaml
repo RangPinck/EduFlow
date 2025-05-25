@@ -102,7 +102,7 @@
 														<Run Text="."></Run>
 														<Run Text="{Binding TaskName}"></Run>
 													</TextBlock>
-													<Button Grid.Column="2" Classes="ListButton" HorizontalAlignment="Right">
+													<Button Grid.Column="2" Classes="ListButton" HorizontalAlignment="Right" Command="{Binding $parent[UserControl].((vm:BlockPageVM)DataContext).GoToTask}" CommandParameter="{Binding $parent[ListBox].SelectedItem}">
 														<Button.Content>
 															<Image Source="/Assets/Info.png" Width="30" Height="30"></Image>
 														</Button.Content>

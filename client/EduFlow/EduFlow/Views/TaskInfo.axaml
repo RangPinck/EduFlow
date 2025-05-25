@@ -1,0 +1,47 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="EduFlow.TaskInfo"
+			 xmlns:vm="using:EduFlow.ViewModels"
+			 x:DataType="vm:TaskInfoVM">
+	<Grid RowDefinitions="80,*,80">
+		<TextBlock Classes="Header">
+			<Run Text="Задача"></Run>
+		</TextBlock>
+		<Button Classes="Cansel" HorizontalAlignment="Left" Margin="5" Command="{Binding GoToBack}">Назад</Button>
+		<Grid Grid.Row="1" RowDefinitions="*,*,*" Margin="10">
+			<!--Данные-->
+			<Border>
+				<Grid RowDefinitions="*,*,*" ColumnDefinitions="*,*">
+					<TextBlock Classes="Header" HorizontalAlignment="Left" TextWrapping="WrapWithOverflow">
+						<Run Text="{Binding Task.TaskName}"></Run>
+					</TextBlock>
+					<TextBlock Grid.Row="1" TextWrapping="WrapWithOverflow">
+						<Run Text="Id: " FontWeight="Bold"></Run>
+						<Run Text="{Binding Task.TaskId}" ></Run>
+					</TextBlock>
+					<TextBlock Grid.Row="2" TextWrapping="WrapWithOverflow">
+						<Run Text="Дата создания: " FontWeight="Bold"></Run>
+						<Run Text="{Binding Task.TaskDateCreated}" ></Run>
+					</TextBlock>
+					<TextBlock Grid.Row="1" Grid.Column="1" TextWrapping="WrapWithOverflow">
+						<Run Text="Ссылка: " FontWeight="Bold"></Run>
+						<Run Text="{Binding Task.Link}" ></Run>
+					</TextBlock>
+					<TextBlock Grid.Row="2" Grid.Column="1" TextWrapping="WrapWithOverflow">
+						<Run Text="Описание: " FontWeight="Bold"></Run>
+						<Run Text="{Binding Task.DateStart}" ></Run>
+					</TextBlock>
+				</Grid>
+			</Border>
+
+			<!--Статус-->
+
+			<!--упражнения-->
+		</Grid>
+
+		<!--редактирование-->
+	</Grid>
+</UserControl>

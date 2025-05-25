@@ -100,11 +100,12 @@ namespace EduFlow.ViewModels
         {
             if (task is null)
             {
-                await MainWindowViewModel.ErrorMessage("Задача", "Для совершения действия выберите блок, нажав на него!");
+                await MainWindowViewModel.ErrorMessage("Задача", "Для совершения действия выберите задачу, нажав на неё!");
                 return;
             }
 
             MainWindowViewModel.Instance.RegistratePageBefore(nameof(BlokPage));
+            MainWindowViewModel.Instance.PageContent = new TaskInfo(task);
         }
     }
 }

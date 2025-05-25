@@ -12,12 +12,16 @@ namespace EduFlow.ViewModels
 
         private Guid _courseId;
 
+        [ObservableProperty]
+        private bool _isAdminKurator = false;
+
         public BlockInfoVM() { }
 
         public BlockInfoVM(FullBlockDTO block, Guid courseId)
         {
             Block = block;
             _courseId = courseId;
+            IsAdminKurator = MainWindowViewModel.Instance.IsAdminKurator;
         }
 
         public void GoToBack()
