@@ -200,7 +200,12 @@ namespace EduFlowApi.Repositories
 
         public double GetProcentOf—ompletion(List<FullBlockDTO> blocks)
         {
-            return (double)(blocks.Sum(x => x.PercentCompletedTask)) / blocks.Count;
+            if (blocks.Count > 0)
+            {
+                return (double)(blocks.Sum(x => x.PercentCompletedTask)) / blocks.Count;
+            }
+
+            return 0.0;
         }
     }
 }

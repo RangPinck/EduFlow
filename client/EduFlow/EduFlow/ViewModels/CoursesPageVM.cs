@@ -39,7 +39,7 @@ namespace EduFlow.ViewModels
 
         private async Task GetCourses()
         {
-            var response = await MainWindowViewModel.ApiClient.GetAllCourses(MainWindowViewModel.User.Token);
+            var response = await MainWindowViewModel.ApiClient.GetAllCourses();
             Courses = JsonConvert.DeserializeObject<List<ShortCourseDTO>>(response);
         }
 

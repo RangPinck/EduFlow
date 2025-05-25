@@ -22,7 +22,7 @@
 						<Border Classes="ItemList">
 							<Grid RowDefinitions="*,*, *, *" ColumnDefinitions="*,*">
 
-								<TextBlock Grid.Row="0" Grid.Column="0" Classes="Header" FontSize="20" HorizontalAlignment="Left">
+								<!--<TextBlock Grid.Row="0" Grid.Column="0" Classes="Header" FontSize="20" HorizontalAlignment="Left">
 									<Run Text="Блок: "></Run>
 									<Run Text="{Binding BlockName}"></Run>
 								</TextBlock>
@@ -66,7 +66,7 @@
 									<Run Text="процент затраченного времени: "></Run>
 									<Run Text="{Binding PercentDurationCompletedTask}"></Run>
 									<Run Text=" %"></Run>
-								</TextBlock>
+								</TextBlock>-->
 
 							</Grid>
 						</Border>

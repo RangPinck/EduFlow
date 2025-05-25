@@ -27,6 +27,8 @@
 						</Grid>
 					</Expander.Header>
 				</Expander>
+				<Panel Height="20"></Panel>
+				<ProgressBar Minimum="0" Maximum="100" Value="92" ShowProgressText="True"></ProgressBar>
 			</StackPanel>
 		</Border>
 	</Design.PreviewWith>
@@ -157,6 +159,23 @@
 		<Setter Property="BorderThickness" Value="3"></Setter>
 		<Setter Property="BorderBrush" Value="#19B0FF"></Setter>
 		<Setter Property="CornerRadius" Value="10"></Setter>
+	</Style>
+
+	<Style Selector="Expander.ListItemExp">
+		<Setter Property="HorizontalAlignment" Value="Center"></Setter>
+		<Setter Property="BorderThickness" Value="3"></Setter>
+		<Setter Property="BorderBrush" Value="#19B0FF"></Setter>
+		<Setter Property="CornerRadius" Value="10"></Setter>
+		<Setter Property="Margin" Value="0,0,0,10"></Setter>
+	</Style>
+
+	<Style Selector="ProgressBar">
+		<Setter Property="HorizontalAlignment" Value="Center"></Setter>
+		<Setter Property="BorderThickness" Value="3"></Setter>
+		<Setter Property="BorderBrush" Value="#19B0FF"></Setter>
+		<Setter Property="Background" Value="White"></Setter>
+		<Setter Property="CornerRadius" Value="10"></Setter>
+		<Setter Property="Foreground" Value="#9EC45F"></Setter>
 	</Style>
 
 </Styles>

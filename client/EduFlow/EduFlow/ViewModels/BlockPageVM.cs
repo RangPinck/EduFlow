@@ -1,7 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using EduFlowApi.DTOs.BlockDTOs;
 using EduFlowApi.DTOs.CourseDTOs;
+using EduFlowApi.DTOs.StudyStateDTOs;
+using EduFlowApi.DTOs.TaskDTOs;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -10,10 +13,10 @@ namespace EduFlow.ViewModels
     public partial class BlockPageVM : ViewModelBase
     {
         [ObservableProperty]
-        private List<ShortBlockDTO> _blocks = new();
+        private List<StudyStateDTO> _studies = new();
 
         [ObservableProperty]
-        private ShortCourseDTO _course = new();
+        private FullCourseDTO _course = new();
 
         [ObservableProperty]
         private bool _isAdminKurator = false;
@@ -23,14 +26,26 @@ namespace EduFlow.ViewModels
         public BlockPageVM(ShortCourseDTO course)
         {
             IsAdminKurator = MainWindowViewModel.Instance.IsAdminKurator;
-            _course = course;
-            GetBlocks(course);
+            Init(course);
         }
 
-        private async Task GetBlocks(ShortCourseDTO currentCourse)
+        private async Task Init(ShortCourseDTO course)
         {
-            var response = await MainWindowViewModel.ApiClient.GetBlock(currentCourse);
-            Blocks = JsonConvert.DeserializeObject<List<ShortBlockDTO>>(response);
+            await GetStudyStatemens();
+            await GetFullCoursData(course.CourseId, MainWindowViewModel.User.Id);
+        }
+
+
+        private async Task GetFullCoursData(Guid courseId, Guid userId)
+        {
+            var response = await MainWindowViewModel.ApiClient.GetFullCoursData(courseId, userId);
+            Course = JsonConvert.DeserializeObject<FullCourseDTO>(response);
+        }
+
+        private async Task GetStudyStatemens()
+        {
+            var response = await MainWindowViewModel.ApiClient.GetStudyStatmens();
+            Studies = JsonConvert.DeserializeObject<List<StudyStateDTO>>(response);
         }
 
         public void GoToBack()
@@ -43,7 +58,7 @@ namespace EduFlow.ViewModels
             //MainWindowViewModel.Instance.PageContent = new AddEditCourse();
         }
 
-        public async Task EditBlock(ShortBlockDTO block)
+        public async Task EditBlock(FullBlockDTO block)
         {
             if (block is null)
             {
@@ -52,6 +67,37 @@ namespace EduFlow.ViewModels
             }
 
             //MainWindowViewModel.Instance.PageContent = new AddEditCourse(Item);
+        }
+
+        public async Task GoToBlockInfo(FullBlockDTO block)
+        {
+            if (block is null)
+            {
+                await MainWindowViewModel.ErrorMessage("Блоки", "Для совершения действия выберите блок, нажав на него!");
+                return;
+            }
+
+
+        }
+
+        public async Task AddMaterial(FullBlockDTO block)
+        {
+            if (block is null)
+            {
+                await MainWindowViewModel.ErrorMessage("Блоки", "Для совершения действия выберите блок, нажав на него!");
+                return;
+            }
+
+
+        }
+
+        public async Task GoToTask(TaskDTO task)
+        {
+            if (task is null)
+            {
+                await MainWindowViewModel.ErrorMessage("Задача", "Для совершения действия выберите блок, нажав на него!");
+                return;
+            }
         }
     }
 }

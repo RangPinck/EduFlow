@@ -89,7 +89,7 @@ namespace EduFlow.ViewModels
             }
             else
             {
-                if (AuthorIndex == 0)
+                if (AuthorIndex == 0 && _isAdmin)
                 {
                     MainWindowViewModel.ErrorMessage(Header, "Выберите создателя курса!");
                 }

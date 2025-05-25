@@ -159,10 +159,8 @@ namespace EduFlowApi.Repositories
             {
                 var tasks = await taskRepository.GetTasksOfBlockIdAsync(item, userId);
                 tasksByBlocksIds.Add((item, tasks, tasks.Count()));
-                var materials = await materialRepository.GetMaterialsByBlocksIds(item, userId);
-                materialsByBlocksIds.Add((item, materials));
-                var statistic = await GetBlockStatisticById(item, userId);
-                blockStatisctics.Add((item, statistic));
+                materialsByBlocksIds.Add((item, (await materialRepository.GetMaterialsByBlocksIds(item, userId))));
+                blockStatisctics.Add((item, (await GetBlockStatisticById(item, userId))));
             }
 
             return blocks.Select(block => new FullBlockDTO()

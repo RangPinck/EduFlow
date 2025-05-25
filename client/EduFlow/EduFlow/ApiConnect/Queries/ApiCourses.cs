@@ -9,7 +9,7 @@ namespace EduFlow.ApiConnect
 {
     public partial class ConnectionApi
     {
-        public async Task<string> GetAllCourses(string token)
+        public async Task<string> GetAllCourses()
         {
             Client.DefaultRequestHeaders.Authorization =
             new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", MainWindowViewModel.User.Token);
@@ -31,6 +31,17 @@ namespace EduFlow.ApiConnect
             {
                 await MainWindowViewModel.ErrorMessage("Не удалось получить курсы!", response.Content.ToString());
             }
+
+            return responseBody;
+        }
+
+        public async Task<string> GetFullCoursData(Guid courseId, Guid userId)
+        {
+            Client.DefaultRequestHeaders.Authorization =
+            new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", MainWindowViewModel.User.Token);
+            HttpResponseMessage response = await Client.GetAsync($"Course/GetCourseById?courseId={courseId}&userId={userId}");
+
+            string responseBody = await response.Content.ReadAsStringAsync();
 
             return responseBody;
         }
