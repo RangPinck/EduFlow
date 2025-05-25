@@ -22,5 +22,7 @@ namespace EduFlowApi.Interfaces
         public Task<bool> CompletedTasksFromTheBlockIsExistsAsync(Guid blockId);
 
         public Task<bool> DeleteBlockAsync(Guid blockId);
+
+        public Task<List<FullBlockDTO>> GetFullBlocksData(Guid courseId, Guid userId);
     }
 }

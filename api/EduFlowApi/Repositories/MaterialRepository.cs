@@ -25,28 +25,77 @@ namespace EduFlowApi.Repositories
 
         public async Task<IEnumerable<MaterialDTO>> GetMaterialsAsync(Guid userId, Guid blockId, int materialTypeId)
         {
-            return await _context.BlocksMaterials.AsNoTracking().Where(material => material.Block == blockId && material.MaterialNavigation.Type == materialTypeId).Select(material => new MaterialDTO()
+            var studyRepository = new StatusStudyRepository(_context);
+
+            var materials = await _context.BlocksMaterials.AsNoTracking().Where(material => material.Block == blockId && material.MaterialNavigation.Type == materialTypeId).ToListAsync();
+
+            List<MaterialDTO> result = new List<MaterialDTO>();
+
+            foreach (var item in materials)
             {
-                MaterialId = material.MaterialNavigation.MaterialId,
-                BlockMaterialId = material.BmId,
-                MaterialName = material.MaterialNavigation.MaterialName,
-                MaterialDateCreate = material.MaterialNavigation.MaterialDateCreate,
-                Link = material.MaterialNavigation.Link,
-                TypeId = material.MaterialNavigation.Type,
-                TypeName = material.MaterialNavigation.TypeNavigation.TypeName,
-                Description = material.MaterialNavigation.Description,
-                DurationNeeded = material.Duration,
-                Note = material.Note,
-                BmDateCreate = material.BmDateCreate,
-                Status = material.UsersTasks.FirstOrDefault(ut => ut.AuthUser == userId && ut.Material == material.MaterialNavigation.MaterialId) != null ? material.UsersTasks.FirstOrDefault(ut => ut.AuthUser == userId && ut.Material == material.MaterialNavigation.MaterialId).Status : 1,
-                Duration = material.UsersTasks.FirstOrDefault(ut => ut.AuthUser == userId && ut.Material == material.MaterialNavigation.MaterialId) != null ? material.UsersTasks.FirstOrDefault(ut => ut.AuthUser == userId && ut.Material == material.MaterialNavigation.MaterialId).DurationMaterial : 0,
-                DateStart = material.UsersTasks.FirstOrDefault(ut => ut.AuthUser == userId && ut.Material == material.MaterialNavigation.MaterialId).DateStart,
-            }).ToListAsync();
+                result.Add(
+                    new MaterialDTO()
+                    {
+                        MaterialId = item.MaterialNavigation.MaterialId,
+                        BlockMaterialId = item.BmId,
+                        MaterialName = item.MaterialNavigation.MaterialName,
+                        MaterialDateCreate = item.MaterialNavigation.MaterialDateCreate,
+                        Link = item.MaterialNavigation.Link,
+                        TypeId = item.MaterialNavigation.Type,
+                        TypeName = item.MaterialNavigation.TypeNavigation.TypeName,
+                        Description = item.MaterialNavigation.Description,
+                        DurationNeeded = item.Duration,
+                        Note = item.Note,
+                        BmDateCreate = item.BmDateCreate,
+                        Status = await studyRepository.CheckStateByIdAsync(item.BmId, userId),
+                        DateStart = await studyRepository.GetDateStart(item.BmId, userId),
+                        Duration = await studyRepository.GetDuration(item.BmId, userId),
+                    });
+            }
+            return result;
+        }
+
+        public async Task<IEnumerable<MaterialDTO>> GetMaterialsByBlocksIds(Guid blockId, Guid userId)
+        {
+            var studyRepository = new StatusStudyRepository(_context);
+
+            var materialsBlocks = await _context.BlocksMaterials.AsNoTracking().Where(x => x.Block == blockId).Include(x => x.MaterialNavigation).ThenInclude(x => x.TypeNavigation).ToListAsync();
+
+            List<MaterialDTO> results = new List<MaterialDTO>();
+
+            foreach (var item in materialsBlocks)
+            {
+                results.Add(
+                    new MaterialDTO()
+                    {
+                        MaterialId = item.MaterialNavigation.MaterialId,
+                        BlockMaterialId = item.BmId,
+                        MaterialName = item.MaterialNavigation.MaterialName,
+                        MaterialDateCreate = item.MaterialNavigation.MaterialDateCreate,
+                        Link = item.MaterialNavigation.Link,
+                        TypeId = item.MaterialNavigation.Type,
+                        TypeName = item.MaterialNavigation.TypeNavigation.TypeName,
+                        Description = item.MaterialNavigation.Description,
+                        DurationNeeded = item.Duration,
+                        Note = item.Note,
+                        BmDateCreate = item.BmDateCreate,
+                        Status = await studyRepository.CheckStateByIdAsync(item.BmId, userId),
+                        DateStart = await studyRepository.GetDateStart(item.BmId, userId),
+                        Duration = await studyRepository.GetDuration(item.BmId, userId),
+                    }
+                );
+            }
+
+            return results;
         }
 
         public async Task<MaterialDTO> GetMaterialByIdAsync(Guid materialId, Guid userId)
         {
-            return await _context.BlocksMaterials.AsNoTracking().Select(material => new MaterialDTO()
+            var material = await _context.BlocksMaterials.AsNoTracking().FirstOrDefaultAsync(x => x.BmId == materialId);
+
+            var studyRepository = new StatusStudyRepository(_context);
+
+            return new MaterialDTO()
             {
                 MaterialId = material.MaterialNavigation.MaterialId,
                 BlockMaterialId = material.BmId,
@@ -59,10 +108,10 @@ namespace EduFlowApi.Repositories
                 DurationNeeded = material.Duration,
                 Note = material.Note,
                 BmDateCreate = material.BmDateCreate,
-                Status = material.UsersTasks.FirstOrDefault(ut => ut.AuthUser == userId && ut.Material == material.MaterialNavigation.MaterialId).Status != null ? material.UsersTasks.FirstOrDefault(ut => ut.AuthUser == userId && ut.Material == material.MaterialNavigation.MaterialId).Status : 1,
-                Duration = material.UsersTasks.FirstOrDefault(ut => ut.AuthUser == userId && ut.Material == material.MaterialNavigation.MaterialId).DurationMaterial != null ? material.UsersTasks.FirstOrDefault(ut => ut.AuthUser == userId && ut.Material == material.MaterialNavigation.MaterialId).DurationMaterial : 0,
-                DateStart = material.UsersTasks.FirstOrDefault(ut => ut.AuthUser == userId && ut.Material == material.MaterialNavigation.MaterialId).DateStart,
-            }).FirstOrDefaultAsync(x => x.MaterialId == materialId);
+                Status = await studyRepository.CheckStateByIdAsync(materialId, userId),
+                DateStart = await studyRepository.GetDateStart(materialId, userId),
+                Duration = await studyRepository.GetDuration(materialId, userId),
+            };
         }
 
         public async Task<bool> AddMaterialAsync(AddMaterialDTO newMaterial)

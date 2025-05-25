@@ -1,4 +1,6 @@
-﻿using System;
+﻿using EduFlowApi.DTOs.PracticeDTOs;
+using EduFlowApi.DTOs.StudyStateDTOs;
+using System;
 using System.Collections.Generic;
 namespace EduFlowApi.DTOs.TaskDTOs
 {
@@ -18,10 +20,12 @@ namespace EduFlowApi.DTOs.TaskDTOs
 
         public string? Description { get; set; }
 
-        public int Status { get; set; }
+        public StudyStateDTO Status { get; set; }
 
         public DateTime? DateStart { get; set; }
 
         public int Duration { get; set; }
+
+        public IEnumerable<PracticeDTO> Practics { get; set; }
     }
 }

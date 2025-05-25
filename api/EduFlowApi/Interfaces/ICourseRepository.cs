@@ -1,3 +1,4 @@
+using EduFlowApi.DTOs.BlockDTOs;
 using EduFlowApi.DTOs.CourseDTOs;
 
 namespace EduFlowApi.Interfaces
@@ -6,7 +7,7 @@ namespace EduFlowApi.Interfaces
     {
         public Task<IEnumerable<ShortCourseDTO>> GetAllCoursesAsync();
 
-        public Task<FullCourseDTO> GetCourseByIdAsync(Guid courseId);
+        public Task<FullCourseDTO> GetCourseByIdAsync(Guid courseId, Guid userId);
 
         public Task<bool> AddCourseAsync(AddCourseDTO newCourse);
 
@@ -22,7 +23,7 @@ namespace EduFlowApi.Interfaces
 
         public Task<bool> CheckSubsOnCourseAsync(Guid courseId);
 
-        public Task<bool> SubscribeUserForACourseAsync(SubscribeUserCourseDTO  suc);
+        public Task<bool> SubscribeUserForACourseAsync(SubscribeUserCourseDTO suc);
 
         public Task<bool> UnsubscribeUserForACourseAsync(SubscribeUserCourseDTO suc);
 
@@ -33,5 +34,7 @@ namespace EduFlowApi.Interfaces
         public Task<IEnumerable<ShortCourseDTO>> GetCoursesThatUserCreateAsync(Guid authorId);
 
         public Task<bool> CourseIsExistByIdAsync(Guid courseId);
+
+        public double GetProcentOf—ompletion(List<FullBlockDTO> blocks);
     }
 }

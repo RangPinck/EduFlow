@@ -19,6 +19,10 @@ namespace EduFlowApi.DTOs.CourseDTOs
 
         public AuthorOfCourseDTO Author { get; set; }
 
-        public ICollection<ShortBlockDTO> Blocks { get; set; }
+        public int CountBlocks { get; set; } = 0;
+
+        public double ProcentOf—ompletion { get; set; } = 0.0;
+
+        public List<FullBlockDTO> Blocks { get; set; }
     }
 }

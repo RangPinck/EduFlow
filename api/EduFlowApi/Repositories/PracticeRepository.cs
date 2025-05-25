@@ -1,9 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using EduFlowApi.DTOs.PracticeDTOs;
-using EduFlowApi.DTOs.TaskDTOs;
 using EduFlowApi.Interfaces;
 using EduFlowApi.Models;
-using System.Diagnostics;
 
 namespace EduFlowApi.Repositories
 {
@@ -64,7 +62,11 @@ namespace EduFlowApi.Repositories
 
         public async Task<PracticeDTO> GetPracticeByIdAsync(Guid practiceId, Guid userId)
         {
-            return await _context.TasksPractices.AsNoTracking().Select(practice => new PracticeDTO()
+            var practice = await _context.TasksPractices.AsNoTracking().FirstOrDefaultAsync(x => x.PracticeId == practiceId);
+
+            var studyRepository = new StatusStudyRepository(_context);
+
+            return new PracticeDTO()
             {
                 PracticeId = practice.PracticeId,
                 PracticeName = practice.PracticeName,
@@ -73,29 +75,92 @@ namespace EduFlowApi.Repositories
                 Link = practice.Link,
                 Task = practice.Task,
                 NumberPracticeOfTask = practice.NumberPracticeOfTask,
-                Status = practice.UsersTasks.FirstOrDefault(x => x.AuthUser == userId && x.Practice == practiceId) != null ? practice.UsersTasks.FirstOrDefault(x => x.AuthUser == userId && x.Practice == practiceId).Status : 1,
-                DateStart = practice.UsersTasks.FirstOrDefault(x => x.AuthUser == userId && x.Practice == practiceId).DateStart,
-                Duration = practice.UsersTasks.FirstOrDefault(x => x.AuthUser == userId && x.Practice == practiceId) != null ? practice.UsersTasks.FirstOrDefault(x => x.AuthUser == userId && x.Practice == practiceId).DurationPractice : 0,
-            }).FirstOrDefaultAsync(x => x.PracticeId == practiceId);
+                Status = await studyRepository.CheckStateByIdAsync(practice.PracticeId, userId),
+                DateStart = await studyRepository.GetDateStart(practice.PracticeId, userId),
+                Duration = await studyRepository.GetDuration(practice.PracticeId, userId),
+            };
         }
 
         public async Task<IEnumerable<PracticeDTO>> GetPracticsOfBlockIdAsync(Guid blockId, Guid userId)
         {
-            List<Guid> tasks = await _context.BlocksTasks.Where(x => x.Block == blockId).Select(x => x.TaskId).ToListAsync();
+            List<Guid> tasksIds = await _context.BlocksTasks.Where(x => x.Block == blockId).Select(x => x.TaskId).ToListAsync();
 
-            return await _context.TasksPractices.AsNoTracking().Where(x => tasks.Contains(x.Task)).Select(practice => new PracticeDTO()
+            var tasks = await _context.TasksPractices.AsNoTracking().Where(x => tasksIds.Contains(x.Task)).ToListAsync();
+
+            var studyRepository = new StatusStudyRepository(_context);
+
+            List<PracticeDTO> results = new List<PracticeDTO>();
+
+            foreach (var item in tasks)
             {
-                PracticeId = practice.PracticeId,
-                PracticeName = practice.PracticeName,
-                PracticeDateCreated = practice.PracticeDateCreated,
-                DurationNeeded = practice.Duration,
-                Link = practice.Link,
-                Task = practice.Task,
-                NumberPracticeOfTask = practice.NumberPracticeOfTask,
-                Status = practice.UsersTasks.FirstOrDefault(x => x.AuthUser == userId && x.Practice == practice.PracticeId) != null ? practice.UsersTasks.FirstOrDefault(x => x.AuthUser == userId && x.Practice == practice.PracticeId).Status : 1,
-                DateStart = practice.UsersTasks.FirstOrDefault(x => x.AuthUser == userId && x.Practice == practice.PracticeId).DateStart,
-                Duration = practice.UsersTasks.FirstOrDefault(x => x.AuthUser == userId && x.Practice == practice.PracticeId) != null ? practice.UsersTasks.FirstOrDefault(x => x.AuthUser == userId && x.Practice == practice.PracticeId).DurationPractice : 0
-            }).ToListAsync();
+                results.Add(new PracticeDTO()
+                {
+                    PracticeId = item.PracticeId,
+                    PracticeName = item.PracticeName,
+                    PracticeDateCreated = item.PracticeDateCreated,
+                    DurationNeeded = item.Duration,
+                    Link = item.Link,
+                    Task = item.Task,
+                    NumberPracticeOfTask = item.NumberPracticeOfTask,
+                    Status = await studyRepository.CheckStateByIdAsync(item.PracticeId, userId),
+                    DateStart = await studyRepository.GetDateStart(item.PracticeId, userId),
+                    Duration = await studyRepository.GetDuration(item.PracticeId, userId),
+                });
+            }
+
+            return results;
+        }
+
+        public async Task<IEnumerable<PracticeDTO>> GetPracticsOfTaskIdAsync(Guid taskId, Guid userId)
+        {
+            var tasks = await _context.TasksPractices.AsNoTracking().Where(x => x.Task == taskId).ToListAsync();
+
+            var studyRepository = new StatusStudyRepository(_context);
+
+            List<PracticeDTO> results = new List<PracticeDTO>();
+
+            foreach (var item in tasks)
+            {
+                results.Add(new PracticeDTO()
+                {
+                    PracticeId = item.PracticeId,
+                    PracticeName = item.PracticeName,
+                    PracticeDateCreated = item.PracticeDateCreated,
+                    DurationNeeded = item.Duration,
+                    Link = item.Link,
+                    Task = item.Task,
+                    NumberPracticeOfTask = item.NumberPracticeOfTask,
+                    Status = await studyRepository.CheckStateByIdAsync(item.PracticeId, userId),
+                    DateStart = await studyRepository.GetDateStart(item.PracticeId, userId),
+                    Duration = await studyRepository.GetDuration(item.PracticeId, userId),
+                });
+            }
+
+            return results;
+        }
+
+        public async Task<List<(Guid id, IEnumerable<PracticeDTO>)>> GetPracticsByTaskIds(List<Guid> tasksIds, Guid userId)
+        {
+            List<(Guid id, IEnumerable<PracticeDTO>)> practics = new List<(Guid id, IEnumerable<PracticeDTO>)>();
+
+            foreach (var item in tasksIds)
+            {
+                practics.Add((item, await GetPracticsOfTaskIdAsync(item, userId)));
+            }
+
+            return practics;
+        }
+
+        public async Task<List<(Guid id, IEnumerable<PracticeDTO>)>> GetPracticsByBlockIds(List<Guid> blocksIds, Guid userId)
+        {
+            List<(Guid id, IEnumerable<PracticeDTO>)> practics = new List<(Guid id, IEnumerable<PracticeDTO>)>();
+
+            foreach (var item in blocksIds)
+            {
+                practics.Add((item, await GetPracticsOfBlockIdAsync(item, userId)));
+            }
+
+            return practics;
         }
 
         public async Task<bool> SaveChangesAsync()

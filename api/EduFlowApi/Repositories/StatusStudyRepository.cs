@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using EduFlowApi.DTOs.StudyStateDTOs;
+﻿using EduFlowApi.DTOs.StudyStateDTOs;
 using EduFlowApi.Interfaces;
 using EduFlowApi.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace EduFlowApi.Repositories
 {
@@ -22,6 +22,103 @@ namespace EduFlowApi.Repositories
         public async Task<bool> CheckPracticeByIdAsync(Guid practiceId)
         {
             return await _context.TasksPractices.AsNoTracking().AnyAsync(x => x.PracticeId == practiceId);
+        }
+
+        public async Task<int> GetDuration(Guid id, Guid userId)
+        {
+            bool taskExist = await CheckTaskByIdAsync(id);
+            bool masterialExist = await CheckMaterialByIdAsync(id);
+            bool practiceExist = await CheckPracticeByIdAsync(id);
+
+            UsersTask duration = null;
+
+            if (taskExist)
+            {
+                duration = await _context.UsersTasks.AsNoTracking().FirstOrDefaultAsync(x => x.Task != null && x.Task == id && x.AuthUser == userId);
+                return duration == null ? 0 : duration.DurationTask;
+            }
+
+            if (masterialExist)
+            {
+                duration = await _context.UsersTasks.AsNoTracking().FirstOrDefaultAsync(x => x.Material != null && x.Material == id && x.AuthUser == userId);
+                return duration == null ? 0 : duration.DurationMaterial;
+            }
+
+            if (practiceExist)
+            {
+                duration = await _context.UsersTasks.AsNoTracking().FirstOrDefaultAsync(x => x.Practice != null && x.Practice == id && x.AuthUser == userId);
+                return duration == null ? 0 : duration.DurationPractice;
+            }
+
+            return 0;
+        }
+
+        public async Task<DateTime?> GetDateStart(Guid id, Guid userId)
+        {
+            bool taskExist = await CheckTaskByIdAsync(id);
+            bool masterialExist = await CheckMaterialByIdAsync(id);
+            bool practiceExist = await CheckPracticeByIdAsync(id);
+
+            UsersTask dateStart = null;
+
+            if (taskExist)
+            {
+                dateStart = await _context.UsersTasks.AsNoTracking().FirstOrDefaultAsync(x => x.Task != null && x.Task == id && x.AuthUser == userId);
+            }
+
+            if (masterialExist)
+            {
+                dateStart = await _context.UsersTasks.AsNoTracking().FirstOrDefaultAsync(x => x.Material != null && x.Material == id && x.AuthUser == userId);
+            }
+
+            if (practiceExist)
+            {
+                dateStart = await _context.UsersTasks.AsNoTracking().FirstOrDefaultAsync(x => x.Practice != null && x.Practice == id && x.AuthUser == userId);
+            }
+
+            return dateStart == null ? null : dateStart.DateStart;
+        }
+
+        public async Task<StudyStateDTO> CheckStateByIdAsync(Guid id, Guid userId)
+        {
+            bool taskExist = await CheckTaskByIdAsync(id);
+            bool masterialExist = await CheckMaterialByIdAsync(id);
+            bool practiceExist = await CheckPracticeByIdAsync(id);
+
+            UsersTask state = null;
+
+            if (taskExist)
+            {
+                state = await _context.UsersTasks.AsNoTracking().FirstOrDefaultAsync(x => x.Task != null && x.Task == id && x.AuthUser == userId);
+            }
+
+            if (masterialExist)
+            {
+                state = await _context.UsersTasks.AsNoTracking().FirstOrDefaultAsync(x => x.Material != null && x.Material == id && x.AuthUser == userId);
+            }
+
+            if (practiceExist)
+            {
+                state = await _context.UsersTasks.AsNoTracking().FirstOrDefaultAsync(x => x.Practice != null && x.Practice == id && x.AuthUser == userId);
+            }
+
+            return new StudyStateDTO()
+            {
+                StateId = state != null ? state.Status : 1,
+                StateName = state != null ? _context.StudyStates.AsNoTracking().First(x => x.StateId == state.Status).StateName : _context.StudyStates.AsNoTracking().First(x => x.StateId == 1).StateName,
+            };
+        }
+
+        public async Task<List<(Guid id, StudyStateDTO state)>> GetStatusesByIdsAsync(List<Guid> ids, Guid userId)
+        {
+            var result = new List<(Guid id, StudyStateDTO state)>();
+
+            foreach (var item in ids)
+            {
+                result.Add((item, await CheckStateByIdAsync(item, userId)));
+            }
+
+            return result;
         }
 
         public async Task<bool> CheckTaskByIdAsync(Guid taskId)

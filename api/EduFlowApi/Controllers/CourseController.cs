@@ -71,17 +71,17 @@ namespace EduFlowApi.Controllers
             }
         }
 
-        [SwaggerOperation(Summary = "Получение курса по id")]
+        [SwaggerOperation(Summary = "Получение курса по id для конкретного пользователя")]
         [HttpGet("GetCourseById")]
         [ProducesResponseType(200, Type = typeof(FullCourseDTO))]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
         [Authorize]
-        public async Task<IActionResult> GetCourseById(Guid courseId)
+        public async Task<IActionResult> GetCourseById(Guid courseId, Guid userId)
         {
             try
             {
-                var course = await _courseRepository.GetCourseByIdAsync(courseId);
+                var course = await _courseRepository.GetCourseByIdAsync(courseId, userId);
 
                 if (!ModelState.IsValid)
                 {

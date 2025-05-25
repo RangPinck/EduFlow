@@ -1,7 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EduFlowApi.DTOs.PracticeDTOs;
+using EduFlowApi.DTOs.StudyStateDTOs;
 using EduFlowApi.DTOs.TaskDTOs;
 using EduFlowApi.Interfaces;
 using EduFlowApi.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
 namespace EduFlowApi.Repositories
 {
     public class TaskRepository : ITaskRepository
@@ -15,20 +20,40 @@ namespace EduFlowApi.Repositories
 
         public async Task<IEnumerable<TaskDTO>> GetTasksOfBlockIdAsync(Guid blockId, Guid userId)
         {
-            return await _context.BlocksTasks.AsNoTracking().Where(task => task.Block == blockId).Select(task => new TaskDTO()
-            {
-                TaskId = task.TaskId,
-                TaskName = task.TaskName,
-                TaskDateCreated = task.TaskDateCreated,
-                DurationNeeded = task.Duration,
-                Link = task.Link,
-                TaskNumberOfBlock = task.TaskNumberOfBlock,
-                Description = task.Description,
-                Status = task.UsersTasks.FirstOrDefault(ut => userId == ut.AuthUser && ut.Task == task.TaskId) != null ? task.UsersTasks.FirstOrDefault(ut => userId == ut.AuthUser && ut.Task == task.TaskId).Status : 1,
-                DateStart = task.UsersTasks.FirstOrDefault(ut => userId == ut.AuthUser && ut.Task == task.TaskId).DateStart,
-                Duration = task.UsersTasks.FirstOrDefault(ut => userId == ut.AuthUser && ut.Task == task.TaskId) != null ? task.UsersTasks.FirstOrDefault(ut => userId == ut.AuthUser && ut.Task == task.TaskId).DurationTask : 0,
+            List<BlocksTask> tasks = await _context.BlocksTasks.AsNoTracking().Where(task => task.Block == blockId).ToListAsync();
 
-            }).ToListAsync();
+            var studyRepository = new StatusStudyRepository(_context);
+
+            List<Guid> ids = tasks.Select(x => x.TaskId).ToList();
+
+            List<(Guid id, StudyStateDTO state)> statuses = await studyRepository.GetStatusesByIdsAsync(ids, userId);
+
+            List<(Guid id, IEnumerable<PracticeDTO> practics)> practics = await new PracticeRepository(_context).GetPracticsByTaskIds(ids, userId);
+
+            List<TaskDTO> result = new List<TaskDTO>();
+
+            foreach (var task in tasks)
+            {
+                result.Add(new TaskDTO()
+                {
+                    TaskId = task.TaskId,
+                    TaskName = task.TaskName,
+                    TaskDateCreated = task.TaskDateCreated,
+                    DurationNeeded = task.Duration,
+                    Link = task.Link,
+                    TaskNumberOfBlock = task.TaskNumberOfBlock,
+                    Description = task.Description,
+
+                    Status = statuses.First(x => x.id == task.TaskId).state,
+
+                    DateStart = await studyRepository.GetDateStart(task.TaskId, userId),
+                    Duration = await studyRepository.GetDuration(task.TaskId, userId),
+
+                    Practics = practics.First(x => x.id == task.TaskId).practics
+                });
+            }
+
+            return result.OrderBy(x => x.TaskNumberOfBlock).ToList();
         }
 
         public async Task<bool> UpdateTaskAsync(UpdateTaskDTO updateTask)
@@ -80,7 +105,11 @@ namespace EduFlowApi.Repositories
 
         public async Task<TaskDTO> GetTaskByIdAsync(Guid taskId, Guid userId)
         {
-            return await _context.BlocksTasks.AsNoTracking().Select(task => new TaskDTO()
+            var task = await _context.BlocksTasks.AsNoTracking().FirstOrDefaultAsync(x => x.TaskId == taskId);
+
+            var studyRepository = new StatusStudyRepository(_context);
+
+            return new TaskDTO()
             {
                 TaskId = task.TaskId,
                 TaskName = task.TaskName,
@@ -89,11 +118,10 @@ namespace EduFlowApi.Repositories
                 Link = task.Link,
                 TaskNumberOfBlock = task.TaskNumberOfBlock,
                 Description = task.Description,
-                Status = task.UsersTasks.FirstOrDefault(ut => userId == ut.AuthUser && ut.Task == task.TaskId) != null ? task.UsersTasks.FirstOrDefault(ut => userId == ut.AuthUser && ut.Task == task.TaskId).Status : 1,
-                DateStart = task.UsersTasks.FirstOrDefault(ut => userId == ut.AuthUser && ut.Task == task.TaskId).DateStart,
-                Duration = task.UsersTasks.FirstOrDefault(ut => userId == ut.AuthUser && ut.Task == task.TaskId) != null ? task.UsersTasks.FirstOrDefault(ut => userId == ut.AuthUser && ut.Task == task.TaskId).DurationTask : 0,
-
-            }).FirstOrDefaultAsync(x => x.TaskId == taskId);
+                Status = await studyRepository.CheckStateByIdAsync(task.TaskId, userId),
+                DateStart = await studyRepository.GetDateStart(task.TaskId, userId),
+                Duration = await studyRepository.GetDuration(task.TaskId, userId),
+            };
         }
 
         public async Task<bool> TaskComparisonByTitleAndBlockAsync(string title, Guid blockId)

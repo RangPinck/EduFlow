@@ -1,3 +1,4 @@
+using EduFlowApi.DTOs.StudyStateDTOs;
 using System;
 using System.Collections.Generic;
 
@@ -21,7 +22,7 @@ namespace EduFlowApi.DTOs.MaterialDTOs
 
         public string? Description { get; set; }
 
-        public int Status { get; set; }
+        public StudyStateDTO Status { get; set; }
 
         public int? DurationNeeded { get; set; } = 0;
 

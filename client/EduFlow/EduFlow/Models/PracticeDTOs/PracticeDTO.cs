@@ -1,3 +1,4 @@
+using EduFlowApi.DTOs.StudyStateDTOs;
 using System;
 using System.Collections.Generic;
 namespace EduFlowApi.DTOs.PracticeDTOs
@@ -22,6 +23,6 @@ namespace EduFlowApi.DTOs.PracticeDTOs
 
         public int Duration { get; set; }
 
-        public int Status { get; set; }
+        public StudyStateDTO Status { get; set; }
     }
 }

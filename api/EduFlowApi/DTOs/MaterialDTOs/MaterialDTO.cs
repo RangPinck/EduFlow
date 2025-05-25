@@ -1,3 +1,5 @@
+using EduFlowApi.DTOs.StudyStateDTOs;
+
 namespace EduFlowApi.DTOs.MaterialDTOs
 {
     public class MaterialDTO
@@ -18,7 +20,7 @@ namespace EduFlowApi.DTOs.MaterialDTOs
 
         public string? Description { get; set; }
 
-        public int Status { get; set; }
+        public StudyStateDTO Status { get; set; }
 
         public int? DurationNeeded { get; set; } = 0;
 

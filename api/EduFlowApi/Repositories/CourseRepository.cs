@@ -38,8 +38,10 @@ namespace EduFlowApi.Repositories
             }).ToListAsync();
         }
 
-        public async Task<FullCourseDTO> GetCourseByIdAsync(Guid courseId)
+        public async Task<FullCourseDTO> GetCourseByIdAsync(Guid courseId, Guid userId)
         {
+            List<FullBlockDTO> blocks = await new BlockRepository(context: _context).GetFullBlocksData(courseId, userId);
+
             return await _context.Courses.AsNoTracking().Select(course => new FullCourseDTO()
             {
                 CourseId = course.CourseId,
@@ -53,14 +55,9 @@ namespace EduFlowApi.Repositories
                     UserName = course.AuthorNavigation.UserName,
                     UserPatronymic = course.AuthorNavigation.UserPatronymic
                 },
-                Blocks = course.CoursesBlocks.Select(block => new ShortBlockDTO()
-                {
-                    BlockId = block.BlockId,
-                    BlockName = block.BlockName,
-                    BlockDateCreated = block.BlockDateCreated,
-                    Description = block.Description,
-                    BlockNumberOfCourse = block.BlockNumberOfCourse
-                }).ToList()
+                Blocks = blocks,
+                CountBlocks = blocks.Count,
+                ProcentOf—ompletion = GetProcentOf—ompletion(blocks)
             }).FirstOrDefaultAsync(x => x.CourseId == courseId);
         }
 
@@ -199,6 +196,11 @@ namespace EduFlowApi.Repositories
         public async Task<bool> CourseIsExistByIdAsync(Guid courseId)
         {
             return await _context.Courses.AnyAsync(x => x.CourseId == courseId);
+        }
+
+        public double GetProcentOf—ompletion(List<FullBlockDTO> blocks)
+        {
+            return (double)(blocks.Sum(x => x.PercentCompletedTask)) / blocks.Count;
         }
     }
 }
