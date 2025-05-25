@@ -12,6 +12,9 @@ namespace EduFlow.ViewModels
         [ObservableProperty]
         private UserDTO _userData;
 
+        [ObservableProperty]
+        private bool _hasData = false;
+
         public UserStatisticVM() { }
 
         public UserStatisticVM(Guid userId)
@@ -24,6 +27,8 @@ namespace EduFlow.ViewModels
             {
                 GetUserDataById(userId);
             }
+
+            HasData = _userData != null;
         }
 
         private async Task GetUserData()

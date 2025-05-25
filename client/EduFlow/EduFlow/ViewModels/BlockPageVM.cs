@@ -35,7 +35,6 @@ namespace EduFlow.ViewModels
             await GetFullCoursData(course.CourseId, MainWindowViewModel.User.Id);
         }
 
-
         private async Task GetFullCoursData(Guid courseId, Guid userId)
         {
             var response = await MainWindowViewModel.ApiClient.GetFullCoursData(courseId, userId);
@@ -98,6 +97,8 @@ namespace EduFlow.ViewModels
                 await MainWindowViewModel.ErrorMessage("Задача", "Для совершения действия выберите блок, нажав на него!");
                 return;
             }
+
+
         }
     }
 }

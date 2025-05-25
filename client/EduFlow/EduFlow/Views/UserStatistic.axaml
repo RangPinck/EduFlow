@@ -9,70 +9,115 @@
 	<Grid RowDefinitions="80, *, 80">
 		<TextBlock Classes="Header">Статистика</TextBlock>
 		<Button Classes="Cansel" HorizontalAlignment="Left" Margin="5" Command="{Binding GoToBack}">Назад</Button>
-		<Grid Grid.Row="1" RowDefinitions="Auto, *">
+		<Grid Grid.Row="1" RowDefinitions="Auto,*, *">
 			<TextBlock HorizontalAlignment="Center" Margin="10">
 				<Run Text="Статистика "></Run>
 				<Run Text="{Binding UserData.UserSurname} "></Run>
 				<Run Text="{Binding UserData.UserName} "></Run>
 				<Run Text="{Binding UserData.UserPatronymic} "></Run>
 			</TextBlock>
-			<ListBox Grid.Row="1" ItemsSource="{Binding UserData.UserStatistics}">
-				<ListBox.ItemTemplate>
+			<StackPanel Grid.Row="1" Margin="10">
+				<TextBlock>
+					<Run FontWeight="Bold" Text="Дата создания:"></Run>
+					<Run Text="{Binding UserData.UserDataCreate}"></Run>
+				</TextBlock>
+				<TextBlock>
+					<Run FontWeight="Bold" Text="Роль:"></Run>
+					<Run Text="{Binding UserData.UserRole[0]}"></Run>
+				</TextBlock>
+			</StackPanel>
+			<TextBlock Classes="Header" Grid.Row="2" IsVisible="{Binding !HasData}" VerticalAlignment="Top">
+				<Run Text="Статистики пока что нет..."></Run>
+			</TextBlock>
+			<ItemsControl Grid.Row="2" ItemsSource="{Binding UserData.UserStatistics}" IsVisible="{Binding HasData}">
+				<ItemsControl.ItemTemplate>
 					<DataTemplate>
-						<Border Classes="ItemList">
-							<Grid RowDefinitions="*,*, *, *" ColumnDefinitions="*,*">
+						<Expander Classes="ListItemExp">
 
-								<!--<TextBlock Grid.Row="0" Grid.Column="0" Classes="Header" FontSize="20" HorizontalAlignment="Left">
-									<Run Text="Блок: "></Run>
-									<Run Text="{Binding BlockName}"></Run>
-								</TextBlock>
+							<Expander.Header>
+								<Grid RowDefinitions="*,*,*" ColumnDefinitions="*,*">
+									<TextBlock Classes="Header" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="0" TextWrapping="WrapWithOverflow">
+										<Run Text="{Binding CourseName}"></Run>
+									</TextBlock>
+									<TextBlock HorizontalAlignment="Left" Grid.Row="1" Grid.Column="0">
+										<Run Text="Автор: "></Run>
+										<Run Text="{Binding Author.UserSurname} "></Run>
+										<Run Text="{Binding Author.UserName} "></Run>
+										<Run Text="{Binding Author.UserPatronymic}"></Run>
+									</TextBlock>
+									<TextBlock HorizontalAlignment="Left" Grid.Row="0" Grid.Column="1">
+										<Run Text="Количество блоков: "></Run>
+										<Run Text="{Binding CountBlocks} "></Run>
+									</TextBlock>
+									<ProgressBar Margin="0 10" Height="20"  Minimum="0" Maximum="100" Value="{Binding ProcentOfСompletion}" ShowProgressText="True"></ProgressBar>
+								</Grid>
+							</Expander.Header>
+							<Grid>
+								<ListBox ItemsSource="{Binding BlocksStatistics}">
+									<ListBox.ItemTemplate>
+										<DataTemplate>
+											<Border Classes="ItemList">
+												<Grid RowDefinitions="*,*, *, *" ColumnDefinitions="*,*">
 
-								<TextBlock Grid.Row="0" Grid.Column="1" FontSize="20" HorizontalAlignment="Left">
-									<Run Text="Id: "></Run>
-									<Run Text="{Binding BlockId}"></Run>
-								</TextBlock>
+													<TextBlock Grid.Row="0" Grid.Column="0" Classes="Header" FontSize="20" HorizontalAlignment="Left">
+														<Run Text="Блок: "></Run>
+														<Run Text="{Binding BlockName}"></Run>
+													</TextBlock>
 
-								<TextBlock Grid.Row="1" Grid.Column="0" FontSize="20" HorizontalAlignment="Left">
-									<Run Text="Общее количество задач: "></Run>
-									<Run Text="{Binding FullyCountTask}"></Run>
-									<Run Text=" шт."></Run>
-								</TextBlock>
+													<TextBlock Grid.Row="0" Grid.Column="1" FontSize="20" HorizontalAlignment="Left">
+														<Run Text="Id: "></Run>
+														<Run Text="{Binding BlockId}"></Run>
+													</TextBlock>
 
-								<TextBlock Grid.Row="3" Grid.Column="0" FontSize="20" HorizontalAlignment="Left">
-									<Run Text="Процент выполненных задач: "></Run>
-									<Run Text="{Binding PercentCompletedTask}"></Run>
-									<Run Text=" %"></Run>
-								</TextBlock>
+													<TextBlock Grid.Row="1" Grid.Column="0" FontSize="20" HorizontalAlignment="Left">
+														<Run Text="Общее количество задач: "></Run>
+														<Run Text="{Binding FullyCountTask}"></Run>
+														<Run Text=" шт."></Run>
+													</TextBlock>
 
-								<TextBlock Grid.Row="2" Grid.Column="0" FontSize="20">
-									<Run Text="Выполненное количество задач: "></Run>
-									<Run Text="{Binding CompletedTaskCount}"></Run>
-									<Run Text=" шт."></Run>
-								</TextBlock>
+													<StackPanel Grid.Row="3">
+														<TextBlock  Grid.Column="0" FontSize="20" HorizontalAlignment="Left">
+															<Run Text="Процент выполненных задач: "></Run>
+														</TextBlock>
+														<ProgressBar Margin="0 10" Height="20"  Minimum="0" Maximum="100" Value="{Binding PercentCompletedTask}" ShowProgressText="True"></ProgressBar>
+													</StackPanel>
 
-								<TextBlock Grid.Row="1" Grid.Column="1" FontSize="20" HorizontalAlignment="Left">
-									<Run Text="Общее количество времени на задачи: "></Run>
-									<Run Text="{Binding FullyDurationNeeded}"></Run>
-									<Run Text=" часов"></Run>
-								</TextBlock>
 
-								<TextBlock Grid.Row="2" Grid.Column="1" FontSize="20">
-									<Run Text="Время затраченное на выполнение задач: "></Run>
-									<Run Text="{Binding DurationCompletedTask}"></Run>
-									<Run Text=" часов"></Run>
-								</TextBlock>
+													<TextBlock Grid.Row="2" Grid.Column="0" FontSize="20">
+														<Run Text="Выполненное количество задач: "></Run>
+														<Run Text="{Binding CompletedTaskCount}"></Run>
+														<Run Text=" шт."></Run>
+													</TextBlock>
 
-								<TextBlock Grid.Row="3" Grid.Column="1" FontSize="20">
-									<Run Text="процент затраченного времени: "></Run>
-									<Run Text="{Binding PercentDurationCompletedTask}"></Run>
-									<Run Text=" %"></Run>
-								</TextBlock>-->
+													<TextBlock Grid.Row="1" Grid.Column="1" FontSize="20" HorizontalAlignment="Left">
+														<Run Text="Общее количество времени на задачи: "></Run>
+														<Run Text="{Binding FullyDurationNeeded}"></Run>
+														<Run Text=" часов"></Run>
+													</TextBlock>
 
+													<TextBlock Grid.Row="2" Grid.Column="1" FontSize="20">
+														<Run Text="Время затраченное на выполнение задач: "></Run>
+														<Run Text="{Binding DurationCompletedTask}"></Run>
+														<Run Text=" часов"></Run>
+													</TextBlock>
+
+													<StackPanel Grid.Row="3">
+														<TextBlock  Grid.Column="0" FontSize="20" HorizontalAlignment="Left">
+															<Run Text="Процент затраченного времени: "></Run>
+														</TextBlock>
+														<ProgressBar Margin="0 10" Height="20"  Minimum="0" Maximum="100" Value="{Binding PercentDurationCompletedTask}" ShowProgressText="True"></ProgressBar>
+													</StackPanel>
+												</Grid>
+											</Border>
+										</DataTemplate>
+									</ListBox.ItemTemplate>
+								</ListBox>
 							</Grid>
-						</Border>
+
+						</Expander>
 					</DataTemplate>
-				</ListBox.ItemTemplate>
-			</ListBox>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
 		</Grid>
 	</Grid>
 </UserControl>
