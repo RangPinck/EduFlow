@@ -1,4 +1,5 @@
 using EduFlowApi.DTOs.BlockDTOs;
+using EduFlowApi.DTOs.CourseDTOs;
 
 namespace EduFlowApi.DTOs.UserDTOs
 {
@@ -20,6 +21,6 @@ namespace EduFlowApi.DTOs.UserDTOs
 
         public DateTime UserDataCreate { get; set; }
 
-        public List<BlockStatisticsDTO> UserStatistics { get; set; } = new List<BlockStatisticsDTO>();
+        public List<CourseStatisticsDTO> UserStatistics { get; set; }
     }
 }
