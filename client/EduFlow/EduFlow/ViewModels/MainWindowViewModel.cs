@@ -1,13 +1,10 @@
 ﻿using Avalonia.Controls;
-using Avalonia.OpenGL.Surfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
 using EduFlow.ApiConnect;
 using EduFlowApi.DTOs.AuthDTO;
-using Microsoft.Azure.Management.ResourceManager.Fluent.Core.ResourceActions;
+using EduFlowApi.DTOs.CourseDTOs;
 using MsBox.Avalonia;
-using System;
 using System.Net;
-using System.Reflection.Metadata;
 using System.Threading.Tasks;
 
 namespace EduFlow.ViewModels
@@ -22,6 +19,9 @@ namespace EduFlow.ViewModels
 
         [ObservableProperty]
         private UserControl _loginPage = new Login();
+
+        [ObservableProperty]
+        private ShortCourseDTO _selectedCourse = new ShortCourseDTO();
 
         [ObservableProperty]
         private bool _isAutorize = false;
@@ -101,7 +101,7 @@ namespace EduFlow.ViewModels
         {
             PageContent = _pageBefore switch
             {
-                nameof(BlokPage) => new BlokPage(),
+                nameof(BlokPage) => new BlokPage(course: SelectedCourse),
                 nameof(CoursesPage) => new CoursesPage(),
                 nameof(Login) => new Login(),
                 nameof(Profile) => new Profile(),

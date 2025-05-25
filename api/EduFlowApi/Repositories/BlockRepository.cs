@@ -65,6 +65,11 @@ namespace EduFlowApi.Repositories
             return await _context.CoursesBlocks.AnyAsync(x => x.BlockName == title && x.Course == courseId);
         }
 
+        public async Task<bool> BlockIsExistByTitleAsync(Guid courseId, string title, Guid updateBlockId)
+        {
+            return await _context.CoursesBlocks.AnyAsync(x => x.BlockName == title && x.Course == courseId && x.BlockId != updateBlockId);
+        }
+
         public async Task<bool> BlockIsExistByIdAsync(Guid blockId)
         {
             return await _context.CoursesBlocks.AnyAsync(x => x.BlockId == blockId);
@@ -134,9 +139,9 @@ namespace EduFlowApi.Repositories
 
                 DurationCompletedTask = _context.UsersTasks.Where(x => x.AuthUser == userId && x.Status == 3 && (x.MaterialNavigation.Block == blockData.BlockId || x.TaskNavigation.Block == blockData.BlockId || x.PracticeNavigation.TaskNavigation.Block == blockData.BlockId)).Sum(x => x.DurationMaterial + x.DurationPractice + x.DurationTask),
 
-                PercentCompletedTask = Math.Round((double)_context.UsersTasks.Where(x => x.AuthUser == userId && x.Status == 3 && (x.MaterialNavigation.Block == blockData.BlockId || x.TaskNavigation.Block == blockData.BlockId || x.PracticeNavigation.TaskNavigation.Block == blockData.BlockId)).Count() / (double)(blockData.BlocksTasks.Count() + blockData.BlocksMaterials.Where(mat => mat.Duration != null).Count() + blockData.BlocksTasks.Select(x => x.TasksPractices.Count()).Sum()) * 100.0, 2),
+                PercentCompletedTask = (blockData.BlocksTasks.Count() + blockData.BlocksMaterials.Where(mat => mat.Duration != null).Count() + blockData.BlocksTasks.Select(x => x.TasksPractices.Count()).Sum()) == 0 ? 0.0 : Math.Round((double)_context.UsersTasks.Where(x => x.AuthUser == userId && x.Status == 3 && (x.MaterialNavigation.Block == blockData.BlockId || x.TaskNavigation.Block == blockData.BlockId || x.PracticeNavigation.TaskNavigation.Block == blockData.BlockId)).Count() / (double)(blockData.BlocksTasks.Count() + blockData.BlocksMaterials.Where(mat => mat.Duration != null).Count() + blockData.BlocksTasks.Select(x => x.TasksPractices.Count()).Sum()) * 100.0, 2),
 
-                PercentDurationCompletedTask = Math.Round((double)_context.UsersTasks.Where(x => x.AuthUser == userId && x.Status == 3 && (x.MaterialNavigation.Block == blockData.BlockId || x.TaskNavigation.Block == blockData.BlockId || x.PracticeNavigation.TaskNavigation.Block == blockData.BlockId)).Sum(x => x.DurationMaterial + x.DurationPractice + x.DurationTask) / (double)(blockData.BlocksTasks.Select(x => x.Duration).Sum() + blockData.BlocksMaterials.Where(mat => mat.Duration != null).Select(x => Convert.ToInt32(x.Duration)).Sum() + blockData.BlocksTasks.Select(x => x.TasksPractices.Select(x => Convert.ToInt32(x.Duration)).Sum()).Sum()) * 100.0, 2),
+                PercentDurationCompletedTask = (blockData.BlocksTasks.Select(x => x.Duration).Sum() + blockData.BlocksMaterials.Where(mat => mat.Duration != null).Select(x => Convert.ToInt32(x.Duration)).Sum() + blockData.BlocksTasks.Select(x => x.TasksPractices.Select(x => Convert.ToInt32(x.Duration)).Sum()).Sum()) == 0 ? 0.0 : Math.Round((double)_context.UsersTasks.Where(x => x.AuthUser == userId && x.Status == 3 && (x.MaterialNavigation.Block == blockData.BlockId || x.TaskNavigation.Block == blockData.BlockId || x.PracticeNavigation.TaskNavigation.Block == blockData.BlockId)).Sum(x => x.DurationMaterial + x.DurationPractice + x.DurationTask) / (double)(blockData.BlocksTasks.Select(x => x.Duration).Sum() + blockData.BlocksMaterials.Where(mat => mat.Duration != null).Select(x => Convert.ToInt32(x.Duration)).Sum() + blockData.BlocksTasks.Select(x => x.TasksPractices.Select(x => Convert.ToInt32(x.Duration)).Sum()).Sum()) * 100.0, 2),
             };
         }
 

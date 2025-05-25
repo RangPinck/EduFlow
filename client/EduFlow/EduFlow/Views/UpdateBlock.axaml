@@ -1,0 +1,32 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="EduFlow.UpdateBlock"
+			 xmlns:vm="using:EduFlow.ViewModels"
+			 x:DataType="vm:UpdateBlockVM">
+	<Grid RowDefinitions="80,*,80">
+		<TextBlock Classes="Header" Text="{Binding Header}"></TextBlock>
+		<Button Classes="Cansel" HorizontalAlignment="Left" Margin="5" Command="{Binding GoToBack}">Назад</Button>
+		<Grid Grid.Row="1" ColumnDefinitions="*,2*,*">
+			<ScrollViewer Grid.Column="1" >
+				<StackPanel Spacing="15"  VerticalAlignment="Center" HorizontalAlignment="Center" >
+
+					<StackPanel>
+						<TextBlock Classes="InputHeader">Название блока:</TextBlock>
+						<TextBox Width="350" Text="{Binding Block.BlockName}"></TextBox>
+					</StackPanel>
+
+					<StackPanel>
+						<TextBlock Classes="InputHeader">Описание:</TextBlock>
+						<TextBox Text="{Binding Block.Description}" TextWrapping="Wrap" MinHeight="100"></TextBox>
+					</StackPanel>
+
+					<Button Grid.Row="2" Grid.Column="1" Classes="Cansel" Command="{Binding DeleteBlock}" IsVisible="{Binding IsEdit}">Удалить блок</Button>
+				</StackPanel>
+			</ScrollViewer>
+		</Grid>
+		<Button Grid.Row="2" Command="{Binding SaveData}" Content="Сохранить"></Button>
+	</Grid>
+</UserControl>

@@ -91,7 +91,7 @@ namespace EduFlow.ApiConnect
 
             if (!response.IsSuccessStatusCode)
             {
-                await MainWindowViewModel.ErrorMessage("Ошибка обновления курса!", ParseErrorResponse(responseBody));
+                await MainWindowViewModel.ErrorMessage("Ошибка удаления курса!", ParseErrorResponse(responseBody));
             }
 
             return responseBody;

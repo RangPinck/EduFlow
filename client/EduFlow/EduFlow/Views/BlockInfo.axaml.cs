@@ -1,7 +1,7 @@
-using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
 using EduFlow.ViewModels;
+using EduFlowApi.DTOs.BlockDTOs;
+using System;
 
 namespace EduFlow;
 
@@ -11,5 +11,11 @@ public partial class BlockInfo : UserControl
     {
         InitializeComponent();
         DataContext = new BlockInfoVM();
+    }
+
+    public BlockInfo(FullBlockDTO block, Guid courseId)
+    {
+        InitializeComponent();
+        DataContext = new BlockInfoVM(block, courseId);
     }
 }

@@ -152,7 +152,7 @@ namespace EduFlowApi.Controllers
                     return BadRequest("This block not found.");
                 }
 
-                if (await _blockRepository.BlockIsExistByTitleAsync(course.CourseId, updateBlock.BlockName))
+                if (await _blockRepository.BlockIsExistByTitleAsync(course.CourseId, updateBlock.BlockName, updateBlock.BlockId))
                 {
                     return BadRequest("Block with this title was exists!");
                 }

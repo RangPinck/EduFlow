@@ -202,7 +202,8 @@ namespace EduFlowApi.Repositories
         {
             if (blocks.Count > 0)
             {
-                return (double)(blocks.Sum(x => x.PercentCompletedTask)) / blocks.Count;
+                double procent = (double)(blocks.Sum(x => x.PercentCompletedTask)) / blocks.Count;
+                return procent != double.NaN ? procent : 0;
             }
 
             return 0.0;

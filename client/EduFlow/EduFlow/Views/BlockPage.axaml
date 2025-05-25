@@ -84,7 +84,7 @@
 											<Button  HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding $parent[UserControl].((vm:BlockPageVM)DataContext).EditBlock}" CommandParameter="{Binding}" Classes="ListButton" >
 												<Image Source="/Assets/Edit.png" Width="30" Height="30"></Image>
 											</Button>
-											<Button IsVisible="{Binding $parent[UserControl].((vm:BlockPageVM)DataContext).IsAdminKurator}" HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding $parent[UserControl].((vm:BlockPageVM)DataContext)}" CommandParameter="{Binding}" Classes="ListButton">
+											<Button IsVisible="{Binding $parent[UserControl].((vm:BlockPageVM)DataContext).IsAdminKurator}" HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding $parent[UserControl].((vm:BlockPageVM)DataContext).GoToBlockInfo}" CommandParameter="{Binding}" Classes="ListButton">
 												<Image Source="/Assets/Info.png" Width="30" Height="30"></Image>
 											</Button>
 										</StackPanel>

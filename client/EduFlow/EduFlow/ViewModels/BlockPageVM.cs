@@ -26,6 +26,7 @@ namespace EduFlow.ViewModels
         public BlockPageVM(ShortCourseDTO course)
         {
             IsAdminKurator = MainWindowViewModel.Instance.IsAdminKurator;
+            MainWindowViewModel.Instance.SelectedCourse = course;
             Init(course);
         }
 
@@ -49,12 +50,14 @@ namespace EduFlow.ViewModels
 
         public void GoToBack()
         {
+            MainWindowViewModel.Instance.RegistratePageBefore(nameof(CoursesPage));
             MainWindowViewModel.Instance.GoToPageBefore();
         }
 
         public void AddBlock()
         {
-            //MainWindowViewModel.Instance.PageContent = new AddEditCourse();
+            MainWindowViewModel.Instance.RegistratePageBefore(nameof(BlokPage));
+            MainWindowViewModel.Instance.PageContent = new UpdateBlock(Course.CourseId);
         }
 
         public async Task EditBlock(FullBlockDTO block)
@@ -65,7 +68,8 @@ namespace EduFlow.ViewModels
                 return;
             }
 
-            //MainWindowViewModel.Instance.PageContent = new AddEditCourse(Item);
+            MainWindowViewModel.Instance.RegistratePageBefore(nameof(BlokPage));
+            MainWindowViewModel.Instance.PageContent = new UpdateBlock(Course.CourseId, block);
         }
 
         public async Task GoToBlockInfo(FullBlockDTO block)
@@ -76,7 +80,9 @@ namespace EduFlow.ViewModels
                 return;
             }
 
+            MainWindowViewModel.Instance.RegistratePageBefore(nameof(BlokPage));
 
+            MainWindowViewModel.Instance.PageContent = new BlockInfo(block, Course.CourseId);
         }
 
         public async Task AddMaterial(FullBlockDTO block)
@@ -87,7 +93,7 @@ namespace EduFlow.ViewModels
                 return;
             }
 
-
+            MainWindowViewModel.Instance.RegistratePageBefore(nameof(BlokPage));
         }
 
         public async Task GoToTask(TaskDTO task)
@@ -98,7 +104,7 @@ namespace EduFlow.ViewModels
                 return;
             }
 
-
+            MainWindowViewModel.Instance.RegistratePageBefore(nameof(BlokPage));
         }
     }
 }

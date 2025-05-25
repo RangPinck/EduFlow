@@ -24,7 +24,7 @@ namespace EduFlowApi.DTOs.BlockDTOs
 
         public int DurationCompletedTask { get; set; }
 
-        public double PercentCompletedTask { get; set; }
+        public double PercentCompletedTask { get; set; } = 0.0;
 
         public double PercentDurationCompletedTask { get; set; }
 

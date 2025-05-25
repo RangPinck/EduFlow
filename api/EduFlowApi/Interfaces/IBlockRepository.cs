@@ -13,6 +13,8 @@ namespace EduFlowApi.Interfaces
 
         public Task<bool> BlockIsExistByTitleAsync(Guid courseId, string title);
 
+        public Task<bool> BlockIsExistByTitleAsync(Guid courseId, string title, Guid updateBlockId);
+
         public Task<bool> BlockIsExistByIdAsync(Guid blockId);
 
         public Task<StandardCourseDTO> GetCourseByBlockIdAsync(Guid blockId);
