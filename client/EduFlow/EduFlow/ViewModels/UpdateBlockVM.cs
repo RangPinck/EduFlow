@@ -66,31 +66,30 @@ namespace EduFlow.ViewModels
 
         public async Task SaveData()
         {
-            string result;
+            string result = string.Empty;
 
-            if (_isEdit)
+            if (IsEdit)
             {
-                await MainWindowViewModel.ApiClient.UpdateBlock(new UpdateBlockDTO()
+                result = await MainWindowViewModel.ApiClient.UpdateBlock(new UpdateBlockDTO()
                 {
                     BlockId = Block.BlockId,
                     BlockName = Block.BlockName,
                     Description = Block.Description
                 });
-                MainWindowViewModel.Instance.GoToPageBefore();
             }
             else
             {
-                string response = await MainWindowViewModel.ApiClient.AddBlock(new AddBlockDTO()
+                result = await MainWindowViewModel.ApiClient.AddBlock(new AddBlockDTO()
                 {
                     BlockName = Block.BlockName,
                     Description = Block.Description,
                     Course = _coursId
                 });
+            }
 
-                if (!string.IsNullOrEmpty(response))
-                {
-                    MainWindowViewModel.Instance.GoToPageBefore();
-                }
+            if (!string.IsNullOrEmpty(result))
+            {
+                MainWindowViewModel.Instance.GoToPageBefore();
             }
         }
     }

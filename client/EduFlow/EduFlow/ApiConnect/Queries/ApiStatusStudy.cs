@@ -36,6 +36,7 @@ namespace EduFlow.ApiConnect
             if (!response.IsSuccessStatusCode)
             {
                 await MainWindowViewModel.ErrorMessage("Ошибка обновления статуса!", ParseErrorResponse(responseBody));
+                return string.Empty;
             }
 
             return responseBody;

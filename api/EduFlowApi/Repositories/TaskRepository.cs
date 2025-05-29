@@ -79,7 +79,7 @@ namespace EduFlowApi.Repositories
 
         public async Task<bool> AddTaskAsync(AddTaskDTO newTask)
         {
-            int numberOfBlock = _context.BlocksTasks.AsNoTracking().Where(x => x.Block == newTask.Block).OrderByDescending(x => x.TaskNumberOfBlock).FirstOrDefault().TaskNumberOfBlock + 1;
+            int numberOfBlock = _context.BlocksTasks.AsNoTracking().Where(x => x.Block == newTask.Block).OrderByDescending(x => x.TaskNumberOfBlock).FirstOrDefault() != null ? _context.BlocksTasks.AsNoTracking().Where(x => x.Block == newTask.Block).OrderByDescending(x => x.TaskNumberOfBlock).FirstOrDefault().TaskNumberOfBlock + 1 : 1;
 
             var task = new BlocksTask()
             {
@@ -106,6 +106,11 @@ namespace EduFlowApi.Repositories
         public async Task<TaskDTO> GetTaskByIdAsync(Guid taskId, Guid userId)
         {
             var task = await _context.BlocksTasks.AsNoTracking().FirstOrDefaultAsync(x => x.TaskId == taskId);
+
+            if (task == null)
+            {
+                return null;
+            }
 
             var studyRepository = new StatusStudyRepository(_context);
 

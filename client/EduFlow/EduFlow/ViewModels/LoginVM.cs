@@ -1,9 +1,12 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Avalonia.Controls.Documents;
+using CommunityToolkit.Mvvm.ComponentModel;
+using EduFlow.ApiConnect;
 using EduFlowApi.DTOs.AuthDTO;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace EduFlow.ViewModels
@@ -16,7 +19,7 @@ namespace EduFlow.ViewModels
         public LoginVM()
         {
             LoginData = new LoginDTO()
-            //убрать
+            //**убрать
             {
 
                 Email = "admin@admin.com",
@@ -24,10 +27,30 @@ namespace EduFlow.ViewModels
             };
         }
 
+        private async Task CheckConnection()
+        {
+            try
+            {
+                MainWindowViewModel.Instance.IsOnline = await MainWindowViewModel.ApiClient.CheckAvailability() == HttpStatusCode.OK;
+
+                if (!MainWindowViewModel.Instance.IsOnline)
+                {
+                    await MainWindowViewModel.ErrorMessage("Ошибка подключения!", "К сожалению, база данных не доступна. Повторите попытку позже.");
+                }
+            }
+            catch
+            {
+                await MainWindowViewModel.ErrorMessage("Ошибка подключения!", "К сожалению, api не доступен. Повторите попытку позже.");
+            }
+        }
+
         public async Task Authorize()
         {
             try
             {
+                MainWindowViewModel.ApiClient = new ConnectionApi("https://localhost:7053/api/");
+                CheckConnection();
+
                 var response = await MainWindowViewModel.ApiClient.LogInUser(LoginData);
 
                 if (!string.IsNullOrEmpty(response))

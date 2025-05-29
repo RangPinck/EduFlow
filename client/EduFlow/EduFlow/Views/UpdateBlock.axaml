@@ -15,7 +15,7 @@
 
 					<StackPanel>
 						<TextBlock Classes="InputHeader">Название блока:</TextBlock>
-						<TextBox Width="350" Text="{Binding Block.BlockName}"></TextBox>
+						<TextBox Text="{Binding Block.BlockName}"></TextBox>
 					</StackPanel>
 
 					<StackPanel>

@@ -74,13 +74,18 @@ namespace EduFlow.ViewModels
 
         public async Task SaveState()
         {
-            await MainWindowViewModel.ApiClient.UpdateStatus(new UpdateStudyStateDTO()
+            string response = await MainWindowViewModel.ApiClient.UpdateStatus(new UpdateStudyStateDTO()
             {
                 UpdateObjectId = Task.TaskId,
                 StateId = Task.Status.StateId,
                 BlockId = _blockId,
                 Duration = Task.Duration
             });
+
+            if (string.IsNullOrEmpty(response))
+            {
+                return;
+            }
 
             await MessageBoxManager.GetMessageBoxStandard("Статус задачи", "Статус задачи успешно обновлён!", MsBox.Avalonia.Enums.ButtonEnum.Ok).ShowAsync();
         }

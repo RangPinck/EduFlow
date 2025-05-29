@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using EduFlowApi.DTOs.BlockDTOs;
 using EduFlowApi.DTOs.CourseDTOs;
+using EduFlowApi.DTOs.MaterialDTOs;
 using EduFlowApi.DTOs.StudyStateDTOs;
 using EduFlowApi.DTOs.TaskDTOs;
 using Newtonsoft.Json;
@@ -95,6 +96,19 @@ namespace EduFlow.ViewModels
             }
 
             MainWindowViewModel.Instance.RegistratePageBefore(nameof(BlokPage));
+            MainWindowViewModel.Instance.PageContent = new UpdateMaterial(block.BlockId);
+        }
+
+        public async Task EditMaterial(MaterialDTO material)
+        {
+            if (material is null)
+            {
+                await MainWindowViewModel.ErrorMessage("Блоки", "Для совершения действия выберите материал, нажав на него!");
+                return;
+            }
+
+            MainWindowViewModel.Instance.RegistratePageBefore(nameof(BlokPage));
+            MainWindowViewModel.Instance.PageContent = new UpdateMaterial(material);
         }
 
         public async Task AddTask(FullBlockDTO block)
@@ -106,18 +120,19 @@ namespace EduFlow.ViewModels
             }
 
             MainWindowViewModel.Instance.RegistratePageBefore(nameof(BlokPage));
+            MainWindowViewModel.Instance.PageContent = new UpdateTask(block.BlockId);
         }
 
-        public async Task EditTask(FullBlockDTO block)
+        public async Task EditTask(TaskDTO task)
         {
-            if (block is null)
+            if (task is null)
             {
                 await MainWindowViewModel.ErrorMessage("Блоки", "Для совершения действия выберите задачу, нажав на неё!");
                 return;
             }
 
             MainWindowViewModel.Instance.RegistratePageBefore(nameof(BlokPage));
-           
+            MainWindowViewModel.Instance.PageContent = new UpdateTask(task);
         }
 
         public async Task GoToTask(TaskDTO task)

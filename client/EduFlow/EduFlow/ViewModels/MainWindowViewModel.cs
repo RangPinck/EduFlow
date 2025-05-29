@@ -46,30 +46,11 @@ namespace EduFlow.ViewModels
         public MainWindowViewModel()
         {
             Instance = this;
-            ApiClient = new ConnectionApi("https://localhost:7053/api/");
-            CheckConnection();
         }
 
         public static async Task ErrorMessage(string title, string message)
         {
             await MessageBoxManager.GetMessageBoxStandard(title, message, MsBox.Avalonia.Enums.ButtonEnum.Ok).ShowAsync();
-        }
-
-        private async Task CheckConnection()
-        {
-            try
-            {
-                IsOnline = await ApiClient.CheckAvailability() == HttpStatusCode.OK;
-
-                if (!_isOnline)
-                {
-                    await ErrorMessage("Ошибка подключения!", "К сожалению, база данных не доступна. Повторите попытку позже.");
-                }
-            }
-            catch
-            {
-                await ErrorMessage("Ошибка подключения!", "К сожалению, api не доступен. Повторите попытку позже.");
-            }
         }
 
         public void ChengeMenuState()

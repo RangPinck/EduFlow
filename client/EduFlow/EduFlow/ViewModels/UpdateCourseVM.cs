@@ -77,15 +77,14 @@ namespace EduFlow.ViewModels
 
         public async Task SaveData()
         {
-            string result;
+            string result = string.Empty;
 
             if (_isEdit)
             {
                 CourseUpdate.Title = CourseFull.Title;
                 CourseUpdate.Link = CourseFull.Link;
                 CourseUpdate.Description = CourseFull.Description;
-                await MainWindowViewModel.ApiClient.UpdateCourse(CourseUpdate);
-                MainWindowViewModel.Instance.PageContent = new CoursesPage();
+                result = await MainWindowViewModel.ApiClient.UpdateCourse(CourseUpdate);
             }
             else
             {
@@ -96,12 +95,12 @@ namespace EduFlow.ViewModels
 
                 CourseFull.Author = Users[AuthorIndex].UserId;
 
-                string response = await MainWindowViewModel.ApiClient.AddCourse(CourseFull);
+                result = await MainWindowViewModel.ApiClient.AddCourse(CourseFull);
+            }
 
-                if (!string.IsNullOrEmpty(response))
-                {
-                    MainWindowViewModel.Instance.PageContent = new CoursesPage();
-                }
+            if (!string.IsNullOrEmpty(result))
+            {
+                MainWindowViewModel.Instance.PageContent = new CoursesPage();
             }
         }
 
@@ -122,7 +121,11 @@ namespace EduFlow.ViewModels
             if (result == MsBox.Avalonia.Enums.ButtonResult.Yes)
             {
                 var response = await MainWindowViewModel.ApiClient.DeleteCourse(CourseUpdate.CourseId);
-                MainWindowViewModel.Instance.PageContent = new CoursesPage();
+
+                if (!string.IsNullOrEmpty(response))
+                {
+                    MainWindowViewModel.Instance.PageContent = new CoursesPage();
+                }
             }
         }
     }

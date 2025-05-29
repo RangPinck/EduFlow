@@ -56,6 +56,7 @@ namespace EduFlow.ApiConnect
             if (!response.IsSuccessStatusCode)
             {
                 await MainWindowViewModel.ErrorMessage("Ошибка обновления блока!", ParseErrorResponse(responseBody));
+                return string.Empty;
             }
 
             return responseBody;
@@ -71,6 +72,7 @@ namespace EduFlow.ApiConnect
             if (!response.IsSuccessStatusCode)
             {
                 await MainWindowViewModel.ErrorMessage("Ошибка удаления!", ParseErrorResponse(responseBody));
+                return string.Empty;
             }
 
             return responseBody;

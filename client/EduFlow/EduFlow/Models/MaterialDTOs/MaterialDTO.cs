@@ -1,10 +1,13 @@
 using EduFlowApi.DTOs.StudyStateDTOs;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Net.NetworkInformation;
+using System.Runtime.CompilerServices;
 
 namespace EduFlowApi.DTOs.MaterialDTOs
 {
-    public class MaterialDTO
+    public class MaterialDTO : INotifyPropertyChanged
     {
         public Guid MaterialId { get; set; }
 
@@ -16,9 +19,35 @@ namespace EduFlowApi.DTOs.MaterialDTOs
 
         public string? Link { get; set; }
 
-        public int TypeId { get; set; }
+        private int _typeId { get; set; }
 
-        public string TypeName { get; set; } = null!;
+        private string _typeName { get; set; } = null!;
+
+        public int TypeId
+        {
+            get => _typeId;
+            set
+            {
+                if (_typeId != value)
+                {
+                    _typeId = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string TypeName
+        {
+            get => _typeName;
+            set
+            {
+                if (_typeName != value)
+                {
+                    _typeName = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public string? Description { get; set; }
 
@@ -33,5 +62,12 @@ namespace EduFlowApi.DTOs.MaterialDTOs
         public string? Note { get; set; }
 
         public DateTime BmDateCreate { get; set; }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }
