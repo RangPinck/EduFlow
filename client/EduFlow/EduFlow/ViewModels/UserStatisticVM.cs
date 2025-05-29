@@ -27,8 +27,6 @@ namespace EduFlow.ViewModels
             {
                 GetUserDataById(userId);
             }
-
-            HasData = _userData != null;
         }
 
         private async Task GetUserData()
@@ -40,6 +38,9 @@ namespace EduFlow.ViewModels
                 var data = JsonConvert.DeserializeObject<UserDTO>(response);
                 UserData = data;
             }
+
+            HasData = _userData != null;
+            OnPropertyChanged(nameof(UserData));
         }
 
         private async Task GetUserDataById(Guid userId)
@@ -51,6 +52,9 @@ namespace EduFlow.ViewModels
                 var data = JsonConvert.DeserializeObject<UserDTO>(response);
                 UserData = data;
             }
+
+            HasData = _userData != null;
+            OnPropertyChanged(nameof(UserData));
         }
 
         public void GoToBack()
