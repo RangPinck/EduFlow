@@ -2,10 +2,14 @@
 using EduFlowApi.DTOs.StudyStateDTOs;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 namespace EduFlowApi.DTOs.TaskDTOs
 {
-    public class TaskDTO
+    public class TaskDTO : INotifyPropertyChanged
     {
+        private StudyStateDTO _status;
+
         public Guid TaskId { get; set; }
 
         public string TaskName { get; set; } = null!;
@@ -20,12 +24,30 @@ namespace EduFlowApi.DTOs.TaskDTOs
 
         public string? Description { get; set; }
 
-        public StudyStateDTO Status { get; set; }
+        public virtual StudyStateDTO Status
+        {
+            get => _status;
+            set
+            {
+                if (_status != value)
+                {
+                    _status = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public DateTime? DateStart { get; set; }
 
         public int Duration { get; set; }
 
         public IEnumerable<PracticeDTO> Practics { get; set; }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

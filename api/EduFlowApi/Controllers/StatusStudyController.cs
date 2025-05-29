@@ -51,7 +51,7 @@ namespace EduFlowApi.Controllers
         }
 
         [SwaggerOperation(Summary = "Обновление статуса изучения")]
-        [HttpPost("UpdateStudyState")]
+        [HttpPut("UpdateStudyState")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]

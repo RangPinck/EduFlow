@@ -29,6 +29,8 @@
 				</Expander>
 				<Panel Height="20"></Panel>
 				<ProgressBar Minimum="0" Maximum="100" Value="92" ShowProgressText="True"></ProgressBar>
+				<Panel Height="20"></Panel>
+				<NumericUpDown Minimum="0" Maximum="100" Value="92" ></NumericUpDown>
 			</StackPanel>
 		</Border>
 	</Design.PreviewWith>
@@ -147,6 +149,24 @@
 		<Setter Property="Background" Value="White"></Setter>
 	</Style>
 
+	<Style Selector="ItemsControl">
+		<Setter Property="Background" Value="White"></Setter>
+	</Style>
+
+	<Style Selector="ItemsControl.ItemsList">
+		<Setter Property="Background" Value="White"></Setter>
+		<Setter Property="BorderThickness" Value="3"></Setter>
+		<Setter Property="BorderBrush" Value="#19B0FF"></Setter>
+		<Setter Property="CornerRadius" Value="10"></Setter>
+	</Style>
+
+	<Style Selector="Border.ItemsList">
+		<Setter Property="Background" Value="White"></Setter>
+		<Setter Property="BorderThickness" Value="3"></Setter>
+		<Setter Property="BorderBrush" Value="#19B0FF"></Setter>
+		<Setter Property="CornerRadius" Value="10"></Setter>
+	</Style>
+
 	<Style Selector="ComboBox">
 		<Setter Property="HorizontalAlignment" Value="Center"></Setter>
 		<Setter Property="BorderThickness" Value="3"></Setter>
@@ -176,6 +196,14 @@
 		<Setter Property="Background" Value="White"></Setter>
 		<Setter Property="CornerRadius" Value="10"></Setter>
 		<Setter Property="Foreground" Value="#9EC45F"></Setter>
+	</Style>
+
+	<Style Selector="NumericUpDown">
+		<Setter Property="HorizontalAlignment" Value="Center"></Setter>
+		<Setter Property="BorderThickness" Value="3"></Setter>
+		<Setter Property="BorderBrush" Value="#19B0FF"></Setter>
+		<Setter Property="Background" Value="White"></Setter>
+		<Setter Property="CornerRadius" Value="10"></Setter>
 	</Style>
 
 </Styles>

@@ -1,6 +1,7 @@
 using Avalonia.Controls;
 using EduFlow.ViewModels;
 using EduFlowApi.DTOs.TaskDTOs;
+using System;
 
 namespace EduFlow;
 
@@ -12,9 +13,9 @@ public partial class TaskInfo : UserControl
         DataContext = new TaskInfoVM();
     }
 
-    public TaskInfo(TaskDTO task)
+    public TaskInfo(TaskDTO task, Guid blockId)
     {
         InitializeComponent();
-        DataContext = new TaskInfoVM(task);
+        DataContext = new TaskInfoVM(task, blockId);
     }
 }

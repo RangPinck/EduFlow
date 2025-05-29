@@ -6,6 +6,7 @@ using EduFlowApi.DTOs.TaskDTOs;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace EduFlow.ViewModels
@@ -96,6 +97,29 @@ namespace EduFlow.ViewModels
             MainWindowViewModel.Instance.RegistratePageBefore(nameof(BlokPage));
         }
 
+        public async Task AddTask(FullBlockDTO block)
+        {
+            if (block is null)
+            {
+                await MainWindowViewModel.ErrorMessage("Блоки", "Для совершения действия выберите блок, нажав на него!");
+                return;
+            }
+
+            MainWindowViewModel.Instance.RegistratePageBefore(nameof(BlokPage));
+        }
+
+        public async Task EditTask(FullBlockDTO block)
+        {
+            if (block is null)
+            {
+                await MainWindowViewModel.ErrorMessage("Блоки", "Для совершения действия выберите задачу, нажав на неё!");
+                return;
+            }
+
+            MainWindowViewModel.Instance.RegistratePageBefore(nameof(BlokPage));
+           
+        }
+
         public async Task GoToTask(TaskDTO task)
         {
             if (task is null)
@@ -105,7 +129,7 @@ namespace EduFlow.ViewModels
             }
 
             MainWindowViewModel.Instance.RegistratePageBefore(nameof(BlokPage));
-            MainWindowViewModel.Instance.PageContent = new TaskInfo(task);
+            MainWindowViewModel.Instance.PageContent = new TaskInfo(task, Course.Blocks.First(x => x.Tasks.Contains(task)).BlockId);
         }
     }
 }

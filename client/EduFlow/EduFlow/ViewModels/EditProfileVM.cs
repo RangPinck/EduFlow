@@ -176,6 +176,16 @@ namespace EduFlow.ViewModels
                 {
                     return;
                 }
+                else
+                {
+                    if (MainWindowViewModel.User.Id == FullUser.UserId)
+                    {
+                        MainWindowViewModel.User.UserName = FullUser.UserName;
+                        MainWindowViewModel.User.UserSurname = FullUser.UserSurname;
+                        MainWindowViewModel.User.Email = FullUser.Email;
+                        MainWindowViewModel.User.UserPatronymic = FullUser.UserPatronymic;
+                    }
+                }
 
                 if (!string.IsNullOrEmpty(FullUser.Password) || !string.IsNullOrEmpty(FullUser.ConfirmPassword))
                 {

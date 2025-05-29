@@ -59,7 +59,7 @@ namespace EduFlowApi.Controllers
 
         [SwaggerOperation(Summary = "Получение задачи по Id")]
         [HttpGet("GetTaskById")]
-        [ProducesResponseType(200, Type = typeof(MaterialDTO))]
+        [ProducesResponseType(200, Type = typeof(TaskDTO))]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
         [Authorize]
@@ -71,14 +71,14 @@ namespace EduFlowApi.Controllers
                 var authUser = _userManager.FindByEmailAsync(httpUser.Identity.Name).Result;
                 var authUserRoles = _userManager.GetRolesAsync(authUser).Result.ToList();
 
-                var material = await _taskRepository.GetTaskByIdAsync(taskId, authUser.Id);
+                var task = await _taskRepository.GetTaskByIdAsync(taskId, authUser.Id);
 
                 if (!ModelState.IsValid)
                 {
                     return BadRequest();
                 }
 
-                return Ok(material);
+                return Ok(task);
             }
             catch (Exception ex)
             {

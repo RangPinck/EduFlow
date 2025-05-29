@@ -1,9 +1,11 @@
 using EduFlowApi.DTOs.StudyStateDTOs;
 using System;
-using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
 namespace EduFlowApi.DTOs.PracticeDTOs
 {
-    public class PracticeDTO
+    public class PracticeDTO : INotifyPropertyChanged
     {
         public Guid PracticeId { get; set; }
 
@@ -23,6 +25,26 @@ namespace EduFlowApi.DTOs.PracticeDTOs
 
         public int Duration { get; set; }
 
-        public StudyStateDTO Status { get; set; }
+        private StudyStateDTO _status;
+
+        public virtual StudyStateDTO Status
+        {
+            get => _status;
+            set
+            {
+                if (_status != value)
+                {
+                    _status = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }
