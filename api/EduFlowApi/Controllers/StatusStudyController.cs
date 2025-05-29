@@ -78,14 +78,14 @@ namespace EduFlowApi.Controllers
                     return BadRequest("The study time cannot be less than or equal to zero!");
                 }
 
-                if (!authUserRoles.Contains("Администратор"))
-                {
-                    var author = await _materialRepository.GetAuthorOfCourseByBlocklIdAsync(updatedState.BlockId);
-                    if (author != null || authUser.Id != author)
-                    {
-                        return BadRequest("You don't have enough rights for this operation!");
-                    }
-                }
+                //if (!authUserRoles.Contains("Администратор"))
+                //{
+                //    var author = await _materialRepository.GetAuthorOfCourseByBlocklIdAsync(updatedState.BlockId);
+                //    if (author != null || authUser.Id != author)
+                //    {
+                //        return BadRequest("You don't have enough rights for this operation!");
+                //    }
+                //}
 
                 if (!await _statusStudyRepository.UpdateStateAsync(updatedState, authUser.Id))
                 {

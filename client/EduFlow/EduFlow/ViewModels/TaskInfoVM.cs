@@ -1,11 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using EduFlowApi.DTOs.PracticeDTOs;
 using EduFlowApi.DTOs.StudyStateDTOs;
 using EduFlowApi.DTOs.TaskDTOs;
 using MsBox.Avalonia;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace EduFlow.ViewModels
@@ -14,6 +14,9 @@ namespace EduFlow.ViewModels
     {
         [ObservableProperty]
         private TaskDTO _task = new();
+
+        [ObservableProperty]
+        private bool _isAdminKurator = false;
 
         private Guid _blockId;
 
@@ -27,6 +30,7 @@ namespace EduFlow.ViewModels
 
         public TaskInfoVM(TaskDTO task, Guid blockId)
         {
+            IsAdminKurator = MainWindowViewModel.Instance.IsAdminKurator;
             _blockId = blockId;
             Init(task);
         }
@@ -88,6 +92,37 @@ namespace EduFlow.ViewModels
             }
 
             await MessageBoxManager.GetMessageBoxStandard("Статус задачи", "Статус задачи успешно обновлён!", MsBox.Avalonia.Enums.ButtonEnum.Ok).ShowAsync();
+        }
+
+        public void AddPracice()
+        {
+            MainWindowViewModel.Instance.RegistratePageBefore(nameof(BlokPage));
+            MainWindowViewModel.Instance.PageContent = new UpdatePractice(Task, _blockId);
+        }
+
+        public async Task EditPracice(PracticeDTO practce)
+        {
+            if (practce is null)
+            {
+                await MainWindowViewModel.ErrorMessage("Практика", "Для совершения действия выберите практическое задание, нажав на него!");
+                return;
+            }
+
+            MainWindowViewModel.Instance.RegistratePageBefore(nameof(BlokPage));
+            MainWindowViewModel.Instance.PageContent = new UpdatePractice(practce, _blockId, Task);
+        }
+
+        public async Task GoToPracticeInfo(PracticeDTO practce)
+        {
+            if (practce is null)
+            {
+                await MainWindowViewModel.ErrorMessage("Практика", "Для совершения действия выберите выберите практическое задание, нажав на него!");
+                return;
+            }
+
+            MainWindowViewModel.Instance.RegistratePageBefore(nameof(BlokPage));
+
+           MainWindowViewModel.Instance.PageContent = new PracticeInfo(practce, _blockId, Task);
         }
     }
 }

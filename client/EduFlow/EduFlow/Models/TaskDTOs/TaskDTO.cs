@@ -41,7 +41,7 @@ namespace EduFlowApi.DTOs.TaskDTOs
 
         public int Duration { get; set; }
 
-        public IEnumerable<PracticeDTO> Practics { get; set; }
+        public List<PracticeDTO> Practics { get; set; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
 

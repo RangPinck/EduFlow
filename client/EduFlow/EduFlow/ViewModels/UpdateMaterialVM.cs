@@ -92,7 +92,7 @@ namespace EduFlow.ViewModels
                     Link = Material.Link,
                     TypeId = Material.TypeId,
                     Description = Material.Description,
-                    Duration = Material.Duration,
+                    Duration = Material.DurationNeeded,
                     Note = Material.Note
                 });
             }
@@ -105,7 +105,7 @@ namespace EduFlow.ViewModels
                     Link = Material.Link,
                     TypeId = Material.TypeId,
                     Description = Material.Description,
-                    Duration = Material.Duration,
+                    Duration = Material.DurationNeeded,
                     Note = Material.Note
                 });
             }

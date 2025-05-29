@@ -1,5 +1,4 @@
-﻿using Avalonia.Controls.Documents;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using EduFlow.ApiConnect;
 using EduFlowApi.DTOs.AuthDTO;
 using Newtonsoft.Json;

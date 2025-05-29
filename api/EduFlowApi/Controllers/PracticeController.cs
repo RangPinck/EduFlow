@@ -60,7 +60,7 @@ namespace EduFlowApi.Controllers
 
         [SwaggerOperation(Summary = "Получение практики по Id")]
         [HttpGet("GetPracticeById")]
-        [ProducesResponseType(200, Type = typeof(MaterialDTO))]
+        [ProducesResponseType(200, Type = typeof(PracticeDTO))]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
         [Authorize]
@@ -72,14 +72,14 @@ namespace EduFlowApi.Controllers
                 var authUser = _userManager.FindByEmailAsync(httpUser.Identity.Name).Result;
                 var authUserRoles = _userManager.GetRolesAsync(authUser).Result.ToList();
 
-                var material = await _practiceRepository.GetPracticeByIdAsync(practiceId, authUser.Id);
+                var practice = await _practiceRepository.GetPracticeByIdAsync(practiceId, authUser.Id);
 
                 if (!ModelState.IsValid)
                 {
                     return BadRequest();
                 }
 
-                return Ok(material);
+                return Ok(practice);
             }
             catch (Exception ex)
             {

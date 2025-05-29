@@ -1,8 +1,6 @@
 using EduFlowApi.DTOs.StudyStateDTOs;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Net.NetworkInformation;
 using System.Runtime.CompilerServices;
 
 namespace EduFlowApi.DTOs.MaterialDTOs
@@ -51,13 +49,26 @@ namespace EduFlowApi.DTOs.MaterialDTOs
 
         public string? Description { get; set; }
 
-        public StudyStateDTO Status { get; set; }
+        private StudyStateDTO _status;
+
+        public virtual StudyStateDTO Status
+        {
+            get => _status;
+            set
+            {
+                if (_status != value)
+                {
+                    _status = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public int? DurationNeeded { get; set; } = 0;
 
         public DateTime? DateStart { get; set; }
 
-        public int? Duration { get; set; }
+        public int Duration { get; set; } = 0;
 
         public string? Note { get; set; }
 

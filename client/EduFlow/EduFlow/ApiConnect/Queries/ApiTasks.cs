@@ -65,5 +65,16 @@ namespace EduFlow.ApiConnect
 
             return responseBody;
         }
+
+        public async Task<string> GetTaskById(Guid taskId)
+        {
+            Client.DefaultRequestHeaders.Authorization =
+            new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", MainWindowViewModel.User.Token);
+            HttpResponseMessage response = await Client.GetAsync($"Task/GetTaskById?taskId={taskId}");
+
+            string responseBody = await response.Content.ReadAsStringAsync();
+
+            return responseBody;
+        }
     }
 }

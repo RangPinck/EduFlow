@@ -141,7 +141,7 @@
 																<Image Source="/Assets/Edit.png" Width="30" Height="30"></Image>
 															</Button>
 
-															<Button  Classes="ListButton" HorizontalAlignment="Right" Command="{Binding }" CommandParameter="{Binding}">
+															<Button  Classes="ListButton" HorizontalAlignment="Right" Command="{Binding $parent[UserControl].((vm:BlockPageVM)DataContext).GoToMaterial}" CommandParameter="{Binding}">
 																<Button.Content>
 																	<Image Source="/Assets/Info.png" Width="30" Height="30"></Image>
 																</Button.Content>

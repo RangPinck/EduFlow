@@ -146,5 +146,17 @@ namespace EduFlow.ViewModels
             MainWindowViewModel.Instance.RegistratePageBefore(nameof(BlokPage));
             MainWindowViewModel.Instance.PageContent = new TaskInfo(task, Course.Blocks.First(x => x.Tasks.Contains(task)).BlockId);
         }
+
+        public async Task GoToMaterial(MaterialDTO material)
+        {
+            if (material is null)
+            {
+                await MainWindowViewModel.ErrorMessage("Материал", "Для совершения действия выберите материал, нажав на неё!");
+                return;
+            }
+
+            MainWindowViewModel.Instance.RegistratePageBefore(nameof(BlokPage));
+            MainWindowViewModel.Instance.PageContent = new MaterialInfo(material, Course.Blocks.First(x => x.Materials.Contains(material)).BlockId);
+        }
     }
 }

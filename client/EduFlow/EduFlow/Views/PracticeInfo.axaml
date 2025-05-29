@@ -1,0 +1,71 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="EduFlow.PracticeInfo"
+			 xmlns:vm="using:EduFlow.ViewModels"
+			 x:DataType="vm:PracticeInfoVM">
+	<Grid RowDefinitions="80,*,80">
+		<TextBlock Classes="Header">
+			<Run Text="Пракатика"></Run>
+		</TextBlock>
+		<Button Classes="Cansel" HorizontalAlignment="Left" Margin="5" Command="{Binding GoToBack}">Назад</Button>
+		<ScrollViewer Grid.Row="1">
+			<Grid RowDefinitions="*,*,*,*,*,*" Margin="10">
+				<Border>
+					<Grid RowDefinitions="*,*" ColumnDefinitions="*">
+						<TextBlock Classes="Header" HorizontalAlignment="Left" TextWrapping="WrapWithOverflow" Grid.ColumnSpan="1" Margin="0,0,0,10">
+							<Run Text="{Binding Practice.NumberPracticeOfTask}"/>
+							<Run Text="."/>
+							<Run Text="{Binding Practice.PracticeName}"/>
+						</TextBlock>
+						<Grid ColumnDefinitions="*,*" RowDefinitions="*,*,*" Grid.Row="1">
+							<TextBlock Grid.Row="0" TextWrapping="WrapWithOverflow">
+								<Run Text="Id: " FontWeight="Bold"></Run>
+								<Run Text="{Binding Practice.PracticeId}" ></Run>
+							</TextBlock>
+							<TextBlock Grid.Row="1" TextWrapping="WrapWithOverflow">
+								<Run Text="Дата создания: " FontWeight="Bold"></Run>
+								<Run Text="{Binding Practice.PracticeDateCreated}" ></Run>
+							</TextBlock>
+							<TextBlock Grid.Row="1" Grid.Column="1" TextWrapping="WrapWithOverflow">
+								<Run Text="Предполагаемое время выполнения: " FontWeight="Bold"></Run>
+								<Run Text="{Binding Practice.DurationNeeded}" ></Run>
+								<Run Text="мин."></Run>
+							</TextBlock>
+						</Grid>
+					</Grid>
+				</Border>
+				<StackPanel Spacing="15" Grid.Row="1" Margin="10" HorizontalAlignment="Center">
+					<TextBlock TextWrapping="WrapWithOverflow">
+						<Run Text="Ссылка: " FontWeight="Bold"></Run>
+						<Run Text="{Binding Practice.Link}" ></Run>
+					</TextBlock>
+				</StackPanel>
+				<StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+					<TextBlock>
+						<Run Text="Текущий статус: "></Run>
+					</TextBlock>
+					<Button Command="{Binding ChengeState}">
+						<Button.Content>
+							<TextBlock Text="{Binding Practice.Status.StateName}"></TextBlock>
+						</Button.Content>
+					</Button>
+				</StackPanel>
+
+				<StackPanel IsVisible="{Binding IsVisibleDuration}" Grid.Row="3">
+					<StackPanel Grid.Column="1" Grid.Row="1">
+						<TextBlock Classes="InputHeader">
+							<Run Text="Время, затраченное на изучение материала:"></Run>
+						</TextBlock>
+						<NumericUpDown  Value="{Binding Practice.Duration}" Minimum="0" Increment="1" HorizontalAlignment="Stretch"></NumericUpDown>
+					</StackPanel>
+				</StackPanel>
+
+				<Button Grid.Row="4" Command="{Binding SaveState}">Сохранить прогресс</Button>
+
+			</Grid>
+		</ScrollViewer>
+	</Grid>
+</UserControl>
