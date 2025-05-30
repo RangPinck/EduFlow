@@ -16,7 +16,7 @@ namespace EduFlow.ApiConnect
 
             if (!response.IsSuccessStatusCode)
             {
-                await MainWindowViewModel.ErrorMessage("Не удалось получить курсы!", response.Content.ToString());
+                await MainWindowViewModel.ErrorMessage("Не удалось получить логи!", response.Content.ToString());
             }
 
             var responseBody = await response.Content.ReadAsStreamAsync();

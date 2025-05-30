@@ -1,8 +1,10 @@
 ﻿using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
+using EduFlow.Another.PDF;
 using EduFlowApi.DTOs.UserDTOs;
 using Newtonsoft.Json;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace EduFlow.ViewModels
@@ -14,6 +16,9 @@ namespace EduFlow.ViewModels
 
         [ObservableProperty]
         private bool _hasData = false;
+
+        [ObservableProperty]
+        private string _savePath = @"" + Directory.GetCurrentDirectory();
 
         public UserStatisticVM() { }
 
@@ -62,5 +67,10 @@ namespace EduFlow.ViewModels
             MainWindowViewModel.Instance.GoToPageBefore();
         }
 
+
+        public async Task GetUserStatisticThatPDF()
+        {
+            await PdfStatistics.CreatePDF(UserData, SavePath);
+        }
     }
 }

@@ -123,5 +123,12 @@
 				</ItemsControl>
 			</Grid>
 		</ScrollViewer>
+		<StackPanel Grid.Row="2" Spacing="20" HorizontalAlignment="Center" Orientation="Horizontal">
+			<StackPanel>
+				<TextBlock Classes="InputHeader">Путь к файлу:</TextBlock>
+				<TextBox Text="{Binding SavePath}"></TextBox>
+			</StackPanel>
+			<Button  Command="{Binding GetUserStatisticThatPDF}">Получить статистику</Button>
+		</StackPanel>
 	</Grid>
 </UserControl>

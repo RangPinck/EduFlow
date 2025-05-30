@@ -42,12 +42,45 @@ namespace EduFlowApi.Controllers
                     contentType = "application/octet-stream";
                 }
 
-                var bytes = await System.IO.File.ReadAllBytesAsync(filepath);
+                FileContentResult file;
 
-                var file = new FileContentResult(bytes, contentType)
+                string tempFile = Path.GetTempFileName();
+
+                using (var stream = new FileStream(
+                         filepath,
+                         FileMode.Open,
+                         FileAccess.Read,
+                         FileShare.ReadWrite)) // Важно!
                 {
-                    FileDownloadName = $"EduFlowApiLog-{date.ToString()}.txt"
-                };
+                    try
+                    {
+                        System.IO.File.Copy(filepath, tempFile, overwrite: true);
+                        var bytes = System.IO.File.ReadAllBytes(tempFile);
+                        file = new FileContentResult(bytes, contentType)
+                        {
+                            FileDownloadName = $"EduFlowApiLog-{date.ToString()}.txt"
+                        };
+                    }
+                    finally
+                    {
+                        System.IO.File.Delete(tempFile);
+                    }
+                }
+
+
+                //using (var stream = new FileStream(
+                //         filepath,
+                //         FileMode.Open,
+                //         FileAccess.Read,
+                //         FileShare.ReadWrite)) // Важно!
+                //{
+                //    var bytes = await System.IO.File.ReadAllBytesAsync(filepath);
+
+                //    file = new FileContentResult(bytes, contentType)
+                //    {
+                //        FileDownloadName = $"EduFlowApiLog-{date.ToString()}.txt"
+                //    };
+                //}
 
                 if (!ModelState.IsValid)
                 {
@@ -55,6 +88,10 @@ namespace EduFlowApi.Controllers
                 }
 
                 return file;
+            }
+            catch (FileNotFoundException file)
+            {
+                return BadRequest("File not found!");
             }
             catch (Exception ex)
             {
