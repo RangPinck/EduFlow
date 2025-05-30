@@ -1,3 +1,4 @@
+using EduFlowApi.DTOs.CourseDTOs;
 using EduFlowApi.DTOs.UserDTOs;
 
 namespace EduFlowApi.Interfaces
@@ -9,7 +10,9 @@ namespace EduFlowApi.Interfaces
         public Task<UserDTO> GetLogginedUserWithStatisticsAsync(Guid userId);
 
         public Task<IEnumerable<CourseAuthorDTO>> GetAuthorsForCoursesAsync();
-        
+
         public Task<bool> UserIsExistAsync(Guid userId);
+
+        public Task<SubscribesUsersOfCourseDTO> GetSubscribesUsersOfCourse(Guid courseId, bool isAdmin);
     }
 }

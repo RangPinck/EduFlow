@@ -98,5 +98,52 @@ namespace EduFlow.ApiConnect
 
             return responseBody;
         }
+
+        public async Task<string> GetUsersForSubscribeCourse(Guid courseId)
+        {
+            Client.DefaultRequestHeaders.Authorization =
+            new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", MainWindowViewModel.User.Token);
+            HttpResponseMessage response = await Client.GetAsync($"Course/GetUsersForSubscribeCourse?courseId={courseId}");
+
+            string responseBody = await response.Content.ReadAsStringAsync();
+
+            return responseBody;
+        }
+
+        public async Task<string> UnsubscribeUserForACourse(SubscribeUserCourseDTO sub)
+        {
+            Client.DefaultRequestHeaders.Authorization =
+             new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", MainWindowViewModel.User.Token);
+            HttpResponseMessage response = await Client.DeleteAsync($"Course/UnsubscribeUserForACourse?userId={sub.userId}&courseId={sub.courseId}");
+            string responseBody = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+            {
+                await MainWindowViewModel.ErrorMessage("Ошибка удаления подписи пользователя на курс!", ParseErrorResponse(responseBody));
+                return string.Empty;
+            }
+
+            return responseBody;
+        }
+
+        public async Task<string> SubscribeUserForACourse(SubscribeUserCourseDTO sub)
+        {
+            Client.DefaultRequestHeaders.Authorization =
+                        new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", MainWindowViewModel.User.Token);
+
+            JsonContent newSubSerialize = JsonContent.Create(sub);
+
+            HttpResponseMessage response = await Client.PostAsync("Course/SubscribeUserForACourse", newSubSerialize);
+
+            string responseBody = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+            {
+                await MainWindowViewModel.ErrorMessage("Ошибка подписи пользователя на курс!", ParseErrorResponse(responseBody));
+                return string.Empty;
+            }
+
+            return await response.Content.ReadAsStringAsync();
+        }
     }
 }

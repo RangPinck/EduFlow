@@ -170,7 +170,7 @@
 		</ScrollViewer>
 		<StackPanel Grid.Row="2" HorizontalAlignment="Center" Orientation="Horizontal" IsVisible="{Binding IsAdminKurator}">
 			<Button  Command="{Binding AddBlock}">Добавить блок</Button>
-			<Button Command="{Binding }">Подписать пользователя</Button>
+			<Button Command="{Binding SubscribeUserToCourse}">Подписать пользователя</Button>
 		</StackPanel>
 	</Grid>
 </UserControl>

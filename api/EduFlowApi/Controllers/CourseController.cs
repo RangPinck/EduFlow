@@ -1,12 +1,13 @@
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Serilog;
 using EduFlowApi.DTOs.CourseDTOs;
 using EduFlowApi.DTOs.UserDTOs;
 using EduFlowApi.Interfaces;
 using EduFlowApi.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Serilog;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Collections.Generic;
 
 namespace EduFlowApi.Controllers
 {
@@ -115,6 +116,52 @@ namespace EduFlowApi.Controllers
                 }
 
                 return Ok(authors);
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"get authors for course => {ex.Message}");
+                return StatusCode(503, ex.Message);
+            }
+        }
+
+        [SwaggerOperation(Summary = "Получение пользователей для подписи на курс")]
+        [HttpGet("GetUsersForSubscribeCourse")]
+        [ProducesResponseType(200, Type = typeof(SubscribesUsersOfCourseDTO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        [Authorize(Roles = "Администратор, Куратор")]
+        public async Task<IActionResult> GetUsersForSubscribeCourse(Guid courseId)
+        {
+            try
+            {
+                var httpUser = HttpContext.User;
+                var authUser = _userManager.FindByEmailAsync(httpUser.Identity.Name).Result;
+                var authUserRoles = _userManager.GetRolesAsync(authUser).Result.ToList();
+
+                SubscribesUsersOfCourseDTO users = new SubscribesUsersOfCourseDTO();
+
+                if (!authUserRoles.Contains("Администратор") && authUserRoles.Contains("Куратор"))
+                {
+                    users = await _userRepository.GetSubscribesUsersOfCourse(courseId, false);
+                }
+                else
+                {
+                    if (authUserRoles.Contains("Администратор"))
+                    {
+                        users = await _userRepository.GetSubscribesUsersOfCourse(courseId, true);
+                    }
+                    else
+                    {
+                        return BadRequest("You don't have enough rights for this operation!");
+                    }
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest();
+                }
+
+                return Ok(users);
             }
             catch (Exception ex)
             {
@@ -338,7 +385,7 @@ namespace EduFlowApi.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
         [Authorize(Roles = "Администратор, Куратор")]
-        public async Task<IActionResult> UnsubscribeUserForACourse(SubscribeUserCourseDTO suc)
+        public async Task<IActionResult> UnsubscribeUserForACourse([FromQuery] SubscribeUserCourseDTO suc)
         {
             try
             {

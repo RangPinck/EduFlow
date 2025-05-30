@@ -60,6 +60,17 @@
 										   IsVisible="{Binding IsOpenMenu}"/>
 								</StackPanel>
 							</Button>
+
+							<Button Command="{Binding GoToLogsPage}"
+								HorizontalAlignment="Stretch"
+								Classes="Menu" IsVisible="{Binding IsAdmin}">
+								<StackPanel Orientation="Horizontal" Margin="5">
+									<Image Source="avares://EduFlow/Assets/Document.png" Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center"></Image>
+									<TextBlock Text="Логи"
+										   Margin="10,0,0,0"
+										   IsVisible="{Binding IsOpenMenu}"/>
+								</StackPanel>
+							</Button>
 						</StackPanel>
 						<Button VerticalAlignment="Bottom"
 								Grid.Row="1"

@@ -149,7 +149,7 @@ public class Program
 
         Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Information()
-            .WriteTo.File($"Logs/EduFlowApiLog-.txt", rollingInterval: RollingInterval.Day, shared: true, retainedFileCountLimit: 10)
+            .WriteTo.File($"Logs/EduFlowApiLog-.txt", rollingInterval: RollingInterval.Day, shared: true, retainedFileCountLimit: 20)
             .CreateLogger();
 
         var app = builder.Build();

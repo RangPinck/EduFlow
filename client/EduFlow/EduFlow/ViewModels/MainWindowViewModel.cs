@@ -73,6 +73,11 @@ namespace EduFlow.ViewModels
             PageContent = new CoursesPage();
         }
 
+        public void GoToLogsPage()
+        {
+            PageContent = new LogsPage();
+        }
+
         public void RegistratePageBefore(string nameControl)
         {
             _pageBefore = nameControl;

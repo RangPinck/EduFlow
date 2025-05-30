@@ -1,7 +1,6 @@
 ﻿using EduFlow.ViewModels;
 using EduFlowApi.DTOs.AccountDTOs;
 using EduFlowApi.DTOs.AuthDTO;
-using EduFlowApi.DTOs.CourseDTOs;
 using System;
 using System.Net.Http;
 using System.Net.Http.Json;

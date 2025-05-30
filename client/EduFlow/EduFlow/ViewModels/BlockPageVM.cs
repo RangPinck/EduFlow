@@ -158,5 +158,11 @@ namespace EduFlow.ViewModels
             MainWindowViewModel.Instance.RegistratePageBefore(nameof(BlokPage));
             MainWindowViewModel.Instance.PageContent = new MaterialInfo(material, Course.Blocks.First(x => x.Materials.Contains(material)).BlockId);
         }
+
+        public void SubscribeUserToCourse()
+        {
+            MainWindowViewModel.Instance.RegistratePageBefore(nameof(BlokPage));
+            MainWindowViewModel.Instance.PageContent = new SubscribeUserCourse();
+        }
     }
 }

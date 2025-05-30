@@ -1,0 +1,66 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="EduFlow.SubscribeUserCourse"
+			 xmlns:vm="using:EduFlow.ViewModels"
+			 x:DataType="vm:SubscribeUserCourseVM">
+	<Grid RowDefinitions="80,80,*">
+		<TextBlock Classes="Header" MaxWidth="600" TextWrapping="Wrap" TextAlignment="Center">
+			<Run Text="Пользователи курса "></Run>
+			<Run Text="{Binding Header}"></Run>
+		</TextBlock>
+		<Button Classes="Cansel" HorizontalAlignment="Left" Margin="5" Command="{Binding GoToBack}">Назад</Button>
+		<Grid ColumnDefinitions="*,10,*" Grid.Row="1">
+			<TextBlock Text="Не подписанные" Grid.Column="0" HorizontalAlignment="Center"></TextBlock>
+			<TextBlock Text="Подписанные" Grid.Column="2" HorizontalAlignment="Center"></TextBlock>
+		</Grid>
+		<ScrollViewer Grid.Row="2">
+			<Grid ColumnDefinitions="*,10,*">
+				<ItemsControl ItemsSource="{Binding Users.UnSubscridedUsers}" Grid.Column="0">
+					<ItemsControl.ItemTemplate>
+						<DataTemplate>
+							<Border Padding="5" Classes="ItemsList" Margin="10,5">
+								<Grid RowDefinitions="*,*" ColumnDefinitions="*,80">
+									<TextBlock TextWrapping="WrapWithOverflow">
+										<Run Text="{Binding UserSurname}"></Run>
+										<Run Text="{Binding UserName}"></Run>
+										<Run Text="{Binding UserPatronymic}"></Run>
+									</TextBlock>
+									<TextBlock Grid.Row="1">
+										<Run Text="{Binding UserRole}"></Run>
+									</TextBlock>
+									<Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding $parent[UserControl].((vm:SubscribeUserCourseVM)DataContext).SubscribeUserOfCourse}" CommandParameter="{Binding}" Classes="ListButton" >
+										<Image Source="/Assets/Plus.png" Width="30" Height="30"></Image>
+									</Button>
+								</Grid>
+							</Border>
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
+				</ItemsControl>
+				<ItemsControl ItemsSource="{Binding Users.SubscridedUsers}" Grid.Column="2">
+					<ItemsControl.ItemTemplate>
+						<DataTemplate>
+							<Border Padding="5" Classes="ItemsList" Margin="10,5">
+								<Grid RowDefinitions="*,*" ColumnDefinitions="*,80">
+									<TextBlock TextWrapping="WrapWithOverflow">
+										<Run Text="{Binding UserSurname}"></Run>
+										<Run Text="{Binding UserName}"></Run>
+										<Run Text="{Binding UserPatronymic}"></Run>
+									</TextBlock>
+									<TextBlock Grid.Row="1">
+										<Run Text="{Binding UserRole}"></Run>
+									</TextBlock>
+									<Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding $parent[UserControl].((vm:SubscribeUserCourseVM)DataContext).UnsubscribeUserOfCourse}" CommandParameter="{Binding}" Classes="ListButton" >
+										<Image Source="/Assets/Close.png" Width="30" Height="30"></Image>
+									</Button>
+								</Grid>
+							</Border>
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
+				</ItemsControl>
+			</Grid>
+		</ScrollViewer>
+	</Grid>
+</UserControl>

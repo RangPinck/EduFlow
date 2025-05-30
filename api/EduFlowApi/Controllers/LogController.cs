@@ -34,13 +34,16 @@ namespace EduFlowApi.Controllers
                 }
 
                 var filepath = Path.Combine(Directory.GetCurrentDirectory(), "Logs", $"EduFlowApiLog-{date.ToString("yyyyMMdd")}.txt");
+
                 var provider = new FileExtensionContentTypeProvider();
+
                 if (!provider.TryGetContentType(filepath, out var contentType))
                 {
                     contentType = "application/octet-stream";
                 }
 
                 var bytes = await System.IO.File.ReadAllBytesAsync(filepath);
+
                 var file = new FileContentResult(bytes, contentType)
                 {
                     FileDownloadName = $"EduFlowApiLog-{date.ToString()}.txt"
