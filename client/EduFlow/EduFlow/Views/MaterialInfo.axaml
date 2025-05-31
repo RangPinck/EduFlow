@@ -44,10 +44,13 @@
 					<TextBlock TextWrapping="WrapWithOverflow">
 						<Run Text="{Binding Material.Description}" ></Run>
 					</TextBlock>
-					<TextBlock TextWrapping="WrapWithOverflow">
-						<Run Text="Ссылка: " FontWeight="Bold"></Run>
-						<Run Text="{Binding Material.Link}" ></Run>
-					</TextBlock>
+
+					<HyperlinkButton NavigateUri="{Binding Material.Link}">
+						<TextBlock TextWrapping="Wrap">
+							<Run Text="{Binding Material.Link}"></Run>
+						</TextBlock>
+					</HyperlinkButton>
+					
 					<TextBlock TextWrapping="WrapWithOverflow">
 						<Run Text="{Binding Material.Note}" ></Run>
 					</TextBlock>

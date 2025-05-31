@@ -42,6 +42,12 @@
 						<Run Text="Ссылка: " FontWeight="Bold"></Run>
 						<Run Text="{Binding Practice.Link}" ></Run>
 					</TextBlock>
+					
+					<HyperlinkButton NavigateUri="{Binding Practice.Link}">
+						<TextBlock TextWrapping="Wrap">
+							<Run Text="{Binding Practice.Link}"></Run>
+						</TextBlock>
+					</HyperlinkButton>
 				</StackPanel>
 				<StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
 					<TextBlock>

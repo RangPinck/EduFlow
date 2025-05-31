@@ -42,10 +42,11 @@
 					<TextBlock TextWrapping="WrapWithOverflow">
 						<Run Text="{Binding Task.Description}" ></Run>
 					</TextBlock>
-					<TextBlock TextWrapping="WrapWithOverflow">
-						<Run Text="Ссылка: " FontWeight="Bold"></Run>
-						<Run Text="{Binding Task.Link}" ></Run>
-					</TextBlock>
+					<HyperlinkButton NavigateUri="{Binding Task.Link}">
+						<TextBlock TextWrapping="Wrap">
+							<Run Text="{Binding Task.Link}"></Run>
+						</TextBlock>
+					</HyperlinkButton>
 				</StackPanel>
 				<StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
 					<TextBlock>
