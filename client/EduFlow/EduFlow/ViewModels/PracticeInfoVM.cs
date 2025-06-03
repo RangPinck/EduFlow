@@ -35,6 +35,15 @@ namespace EduFlow.ViewModels
 
             GetStudyStatemens();
 
+            if (Practice.Status == null)
+            {
+                Practice.Status = new StudyStateDTO()
+                {
+                    StateId = 1,
+                    StateName = "Не приступал к изучению"
+                };
+            }
+
             if (Practice.Status.StateId == 3)
             {
                 IsVisibleDuration = true;

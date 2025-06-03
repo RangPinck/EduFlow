@@ -11,15 +11,13 @@ namespace EduFlow.ViewModels
         [ObservableProperty]
         private SignInDTO _profile;
 
-        //**сделать получение пользователя
-
         public ProfileVM()
         {
             Profile = new SignInDTO()
             {
                 Id = MainWindowViewModel.User.Id,
                 Email = MainWindowViewModel.User.Email,
-                UserSurname = MainWindowViewModel.User.UserName,
+                UserSurname = MainWindowViewModel.User.UserSurname,
                 UserName = MainWindowViewModel.User.UserName,
                 UserPatronymic = MainWindowViewModel.User.UserPatronymic,
                 IsFirst = MainWindowViewModel.User.IsFirst,

@@ -50,7 +50,7 @@ namespace EduFlowApi.Controllers
                          filepath,
                          FileMode.Open,
                          FileAccess.Read,
-                         FileShare.ReadWrite)) // Важно!
+                         FileShare.ReadWrite))
                 {
                     try
                     {

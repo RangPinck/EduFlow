@@ -126,7 +126,7 @@ namespace EduFlowApi.Controllers
                 if (!authUserRoles.Contains("Администратор"))
                 {
                     var author = await _materialRepository.GetAuthorOfCourseByBlocklIdAsync(await _taskRepository.GetBlockIdByTaskIdAsync(newPractice.Task));
-                    if (author != null || authUser.Id != author)
+                    if (author == null || authUser.Id != author)
                     {
                         return BadRequest("You don't have enough rights for this operation!");
                     }
@@ -186,7 +186,7 @@ namespace EduFlowApi.Controllers
                 if (!authUserRoles.Contains("Администратор"))
                 {
                     var author = await _materialRepository.GetAuthorOfCourseByBlocklIdAsync(await _taskRepository.GetBlockIdByTaskIdAsync(practice.Task));
-                    if (author != null || authUser.Id != author)
+                    if (author == null || authUser.Id != author)
                     {
                         return BadRequest("You don't have enough rights for this operation!");
                     }
@@ -236,7 +236,7 @@ namespace EduFlowApi.Controllers
                 if (!authUserRoles.Contains("Администратор"))
                 {
                     var author = await _materialRepository.GetAuthorOfCourseByBlocklIdAsync(await _taskRepository.GetBlockIdByTaskIdAsync(practice.Task));
-                    if (author != null || authUser.Id != author)
+                    if (author == null || authUser.Id != author)
                     {
                         return BadRequest("You don't have enough rights for this operation!");
                     }

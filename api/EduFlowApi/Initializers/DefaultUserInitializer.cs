@@ -19,7 +19,7 @@ namespace EduFlowApi.Initializers
             new Role
             {
                 Id =  Guid.Parse("c9eb182b-1c3e-4c3b-8c3e-1c3e4c3b8c3e"),
-                Name = "Учитель",
+                Name = "Куратор",
                 NormalizedName = "КУРАТОР",
                 ConcurrencyStamp = "c9eb182b-1c3e-4c3b-8c3e-1c3e4c3b8c3e",
                 IsNoManipulate= true
