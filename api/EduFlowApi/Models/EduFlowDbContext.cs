@@ -39,10 +39,11 @@ public partial class EduFlowDbContext : IdentityDbContext<AuthUser, Role, Guid>
 
     public virtual DbSet<UsersTask> UsersTasks { get; set; }
 
-    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    //    => optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Username=admin;Password=123456;Database=edu_flow_db;Pooling=true");
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Username=admin;Password=123456;Database=study_1C_db;Pooling=true");
+        => optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Username=admin;Password=123456;Database=edu_flow_db;Pooling=true");
+
+    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    //    => optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Username=admin;Password=123456;Database=study_1C_db;Pooling=true");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
