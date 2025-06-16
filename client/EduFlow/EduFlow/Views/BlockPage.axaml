@@ -55,7 +55,7 @@
 						<TextBlock Grid.Row="1" Grid.Column="1" TextWrapping="Wrap" Margin="0,0,0,5">
 							<Run Text="Прогрпесс освоения: "></Run>
 						</TextBlock>
-						<ProgressBar HorizontalAlignment="Stretch"   ShowProgressText="True" Minimum="0" Maximum="100" Value="{Binding Course.ProcentOfСompletion}"></ProgressBar>
+						<ProgressBar HorizontalAlignment="Stretch"   ShowProgressText="True" Minimum="0" Maximum="100" Value="{Binding Course.ProcentOfCompletion}"></ProgressBar>
 					</StackPanel>
 				</Grid>
 
