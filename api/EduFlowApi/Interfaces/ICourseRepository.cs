@@ -35,6 +35,6 @@ namespace EduFlowApi.Interfaces
 
         public Task<bool> CourseIsExistByIdAsync(Guid courseId);
 
-        public double GetProcentOf—ompletion(List<FullBlockDTO> blocks);
+        public double GetProcentOfCompletion(List<FullBlockDTO> blocks);
     }
 }

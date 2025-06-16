@@ -57,7 +57,7 @@ namespace EduFlowApi.Repositories
                 },
                 Blocks = blocks,
                 CountBlocks = blocks.Count,
-                ProcentOf—ompletion = GetProcentOf—ompletion(blocks)
+                ProcentOfCompletion = GetProcentOfCompletion(blocks)
             }).FirstOrDefaultAsync(x => x.CourseId == courseId);
         }
 
@@ -198,7 +198,7 @@ namespace EduFlowApi.Repositories
             return await _context.Courses.AnyAsync(x => x.CourseId == courseId);
         }
 
-        public double GetProcentOf—ompletion(List<FullBlockDTO> blocks)
+        public double GetProcentOfCompletion(List<FullBlockDTO> blocks)
         {
             if (blocks.Count > 0)
             {

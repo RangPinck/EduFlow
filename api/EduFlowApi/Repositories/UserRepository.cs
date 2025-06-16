@@ -141,7 +141,7 @@ namespace EduFlowApi.Repositories
                         },
                         CountBlocks = item.CoursesBlocks.Count,
                         BlocksStatistics = blocksStatistic,
-                        ProcentOfСompletion = blocksStatistic.Count,
+                        ProcentOfCompletion = blocksStatistic.Count,
                     });
                 }
             }
