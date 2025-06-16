@@ -882,7 +882,7 @@ namespace EduFlowApiTests
                 }
             };
 
-            var result = await controller.DeleteAccount(dto);
+            var result = await controller.DeleteAccount(dto.UserId);
 
             result.Should().NotBeNull();
             result.Should().BeAssignableTo<OkObjectResult>();

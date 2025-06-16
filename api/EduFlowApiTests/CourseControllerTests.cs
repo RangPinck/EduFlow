@@ -145,7 +145,7 @@ namespace EduFlowApiTests
         {
             var userRepository = new UserRepository(_context, _userManagerMock.Object, _roleManagerMock.Object);
             var courseRepository = new CourseRepository(_context, _userManagerMock.Object);
-
+            
             var controller = new CourseController(courseRepository, userRepository, _userManagerMock.Object)
             {
                 ControllerContext = new ControllerContext()
@@ -154,7 +154,7 @@ namespace EduFlowApiTests
                 }
             };
 
-            var result = await controller.GetCourseById(_course.CourseId);
+            var result = await controller.GetCourseById(_course.CourseId, _adminData.UserId);
 
             result.Should().NotBeNull();
             result.Should().BeAssignableTo<OkObjectResult>();

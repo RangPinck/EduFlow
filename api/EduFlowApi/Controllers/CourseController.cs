@@ -78,7 +78,7 @@ namespace EduFlowApi.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
         [Authorize]
-        public async Task<IActionResult> GetCourseById(Guid courseId, Guid userId)
+        public async Task<IActionResult> GetCourseById( Guid courseId, Guid userId)
         {
             try
             {
